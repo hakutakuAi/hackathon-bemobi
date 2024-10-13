@@ -8,19 +8,40 @@ import openBar from '@/app/assets/openBar.svg';
 import Send from '../assets/icons/send';
 import Logo from "@/app/assets/logo.svg"
 import closeBar from '@/app/assets/closeBar.svg'; 
-
+import userIcon from '@/app/assets/Avatar.svg';
+import chatIcon from '@/app/assets/avatarHakutaku.png';
 const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
     <div className="chat-container px-40 flex flex-col h-full w-full">
-      <div className="flex-1 overflow-y-auto mt-2">
-        {messages.map(m => (
-          <div key={m.id} className={`message ${m.role} text-black`}>
-            <strong>{m.role}:</strong> {m.content}
-          </div>
-        ))}
+<div className="flex-1 overflow-y-auto mt-2">
+  {messages.map(m => (
+    <div
+      key={m.id}
+      className={`message ${m.role === 'user' ? 'justify-end' : 'justify-start'} flex mb-2 items-center`}
+    >
+      {/* Ícone para a mensagem do assistant (chat) */}
+      {m.role === 'assistant' && (
+        <Image src={chatIcon} alt="Chat Icon" width={130} height={130} className="mr-2" />
+      )}
+      
+      <div
+        className={`p-3 rounded-lg ${
+          m.role === 'user' ? 'bg-[#D5CCC9] text-black' : 'bg-none text-black'
+        } max-w-xs`}
+      >
+       {m.content}
       </div>
+
+      {/* Ícone para a mensagem do usuário */}
+      {m.role === 'user' && (
+        <Image src={userIcon} alt="User Icon" width={30} height={30} className="ml-2" />
+      )}
+    </div>
+  ))}
+</div>
+
 
       {/* Form always at the bottom */}
       <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-3xl flex w-full bg-none">
