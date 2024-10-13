@@ -120,7 +120,7 @@ const Chat = () => {
 					<input
 						value={input}
 						onChange={handleInputChange}
-						placeholder={isLoading ? 'Aguarde a resposta...' : 'Compartilhe seus pensamentos mágicos...'}
+						placeholder={isLoading ? 'Aguarde a resposta...' : 'Compartilhe seus pensamentos...'}
 						disabled={isLoading}
 						className={`flex-1 p-4 rounded-full text-black bg-[#FDFDFD] focus:outline-none placeholder-gray-500 transition duration-300 ease-in-out ${
 							isLoading ? 'cursor-not-allowed' : ''
