@@ -18,7 +18,7 @@ const Chat = () => {
 	const [userScrolled, setUserScrolled] = useState(false)
 
 	const displayMessages = useMemo(() => {
-		return messages.reduce((acc, message, index) => {
+		return messages.reduce((acc: any[], message, index) => {
 			if (message.role === 'assistant' && message.content === '' && message.toolInvocations) {
 				const nextMessage = messages[index + 1]
 				if (!nextMessage || nextMessage.role !== 'assistant' || nextMessage.content === '') {

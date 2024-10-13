@@ -81,7 +81,7 @@ export default class AirbyteService {
 				destinationCreateRequest: {
 					name,
 					configuration,
-					workspaceId: this.workspaceId,
+					workspaceId: this.workspaceId!,
 				},
 			})
 			return response.data
@@ -138,7 +138,7 @@ export default class AirbyteService {
 				sourceCreateRequest: {
 					name,
 					configuration,
-					workspaceId: this.workspaceId,
+					workspaceId: this.workspaceId!,
 				},
 			})
 			return response.data
