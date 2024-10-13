@@ -9,19 +9,49 @@ import openBar from '@/assets/openBar.svg'
 import { SiGooglesheets } from 'react-icons/si';
 import Logo from '@/assets/logo.svg'
 import Chat from '@/components/Chat'
+import Link from 'next/link';
+
 import Charts from '@/components/Chart';
 import DotPattern from '@/components/ui/dot-pattern'
 import { cn } from '@/lib/utils'
 import Card from '@/components/Card'
 
-interface Integration {
+interface SourceConfiguration {
+    batch_size: number;
+    credentials: {
+      auth_type: string;
+      client_id: string;
+      client_secret: string;
+      refresh_token: string;
+    };
+    spreadsheet_id: string; // Aqui está a propriedade que você quer acessar
+    names_conversion: boolean;
+  }
+  
+  interface Source {
+    sourceId: string;
+    name: string;
+    sourceType: string;
+    workspaceId: string;
+    configuration: SourceConfiguration; // Certifique-se de que a configuração está aqui
+  }
+  
+  interface Integration {
     connectionId: string;
     name: string;
+    source: Source;
+    destination: any; // ajuste conforme necessário
+    schedule: {
+      scheduleType: string;
+      basicTiming: string;
+    };
     status: string;
-    source: { name: string; sourceType: string };
-    destination: { name: string; destinationType: string };
-    schedule: { basicTiming: string };
+    // ... outras propriedades
   }
+  
+  // Supondo que você tenha a seguinte lista de integrações
+  const integrations: Integration[] = [ /* dados da API */ ];
+
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -76,11 +106,13 @@ const Home = () => {
               onMouseLeave={() => setHoveredIntegrationId(null)}
             >
               <div className="flex items-center space-x-2">
-                {integration.source.sourceType === 'google-sheets' ? (
-                  <SiGooglesheets size={24} />
-                ) : (
-                  <FaGoogleDrive size={24} />
-                )}
+              {integration.source.sourceType === 'google-sheets' ? (
+              <Link href={integration.source.configuration.spreadsheet_id} target="_blank">
+                <SiGooglesheets size={24} className="cursor-pointer" />
+              </Link>
+            ) : (
+              <FaGoogleDrive size={24} />
+            )}
                 <span>{integration.name}</span>
               </div>
               <span className="text-sm">Status: {integration.status}</span>
