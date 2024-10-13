@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar';
 import Image from 'next/image';
 import openBar from '@/app/assets/openBar.svg';
 import Send from '../assets/icons/send';
-import Logo from "@/app/assets/logo.svg"
+import Logo from "@/app/assets/logo.svg";
 import closeBar from '@/app/assets/closeBar.svg';
 import userIcon from '@/app/assets/Avatar.svg';
 import chatIcon from '@/app/assets/HKTK-R02_AVATAR-FACE-01.png';
@@ -78,6 +78,7 @@ const Chat = () => {
           </div>
         ))}
       </div>
+
       <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-3xl flex w-full bg-none">
         <div className="flex items-center justify-between px-4 w-full bg-none">
           <input
@@ -91,7 +92,7 @@ const Chat = () => {
             type="submit"
             className="p-1 bg-[#FF791F] text-black rounded-3xl"
           >
-            <Send/>
+            <Send />
           </button>
         </div>
       </form>
