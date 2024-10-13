@@ -7,7 +7,7 @@ import { embed } from 'ai'
 export const maxDuration = 15
 
 const getInformationTool = tool({
-	description: `Retrieve relevant information from the knowledge base to answer the user's question. Utilize the Qdrant vector database to find the most semantically similar documents.`,
+	description: `Retrieve relevant information from the knowledge base to answer the user's question. Utilize the Qdrant vector database to find the most semantically similar documents. You can use it repeatedly to find information on different topics.`,
 	parameters: z.object({
 		question: z.string().describe("The user's question for which information is sought."),
 	}),
@@ -36,7 +36,7 @@ const getInformationTool = tool({
 			}
 
 			console.log('Executing getInformationTool with question:', question)
-			const searchResults = await client.search(collectionName, { vector: embedding, limit: 4 })
+			const searchResults = await client.search(collectionName, { vector: embedding, limit: 10 })
 			console.log('Search results:', searchResults)
 
 			if (!searchResults || searchResults.length === 0) {
@@ -51,7 +51,8 @@ const getInformationTool = tool({
 					}
 					return String(payload)
 				})
-				.join('\n\n')
+				.join('\n')
+			console.log('Information:', information)
 
 			return information
 		} catch (error) {
@@ -68,11 +69,11 @@ export async function POST(req: Request) {
 		const result = await streamText({
 			model: openai('gpt-4o'),
 			messages: convertToCoreMessages(messages),
-			system: `You are a helpful assistant. Check your knowledge base before answering any questions. Only respond to questions using information from tool calls. If no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
+			system: `You are a helpful assistant. Check your knowledge base before answering any questions. Only respond to questions using information from tool calls.`,
 			tools: {
 				getInformation: getInformationTool,
 			},
-			maxSteps: 3,
+			maxSteps: 5,
 		})
 
 		return result.toDataStreamResponse()
