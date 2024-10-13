@@ -57,6 +57,16 @@ export default class AirbyteService {
 	}
 
 	public connections = {
+		getById: async (connectionId: string) => {
+			const api = await this.getConnectionsApi()
+			const connection = await api.getConnection({ connectionId })
+			return connection.data
+		},
+		getAll: async () => {
+			const api = await this.getConnectionsApi()
+			const connections = await api.listConnections()
+			return connections.data
+		},
 		create: async () => {
 			const api = await this.getConnectionsApi()
 			const connections = await api.listConnections()

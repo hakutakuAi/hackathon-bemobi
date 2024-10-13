@@ -5,7 +5,7 @@ export async function GET() {
 	const client = new AirbyteService()
 	await client.initialize()
 
-	const response = await client.workspaces.getAll()
+	const response = await client.connections.getAll()
 
 	return NextResponse.json(response)
 }
