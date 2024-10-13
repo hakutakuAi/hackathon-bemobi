@@ -8,21 +8,18 @@ import Logo from '@/assets/logo.svg'
 import Chat from '@/components/Chat'
 import DotPattern from '@/components/ui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation' // Importando o useRouter
-
+import { useRouter } from 'next/navigation'
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter() // Instanciando o useRouter
-
+	const [isOpen, setIsOpen] = useState(false)
+	const router = useRouter()
 
 	const toggleSidebar = () => {
 		setIsOpen(!isOpen)
-  }
-  
+	}
+
 	const handleLogin = () => {
-		// Adicione a lógica de autenticação aqui se necessário
-		router.push('/Admin') // Redireciona para a rota /Chat
+		router.push('/Admin')
 	}
 
 	return (
