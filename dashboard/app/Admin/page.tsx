@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FaUser } from 'react-icons/fa'; // Exemplo usando um ícone de usuário
 import { FaGoogleDrive, FaGithub, FaSlack } from 'react-icons/fa'; // Ícones de Drive, GitHub e Slack
 import openBar from '@/assets/openBar.svg'
+import { SiGooglesheets } from 'react-icons/si';
 import Logo from '@/assets/logo.svg'
 import Chat from '@/components/Chat'
 import Charts from '@/components/Chart';
@@ -45,7 +46,7 @@ const Home = () => {
         <div className="space-y-6">
           <Card icon={<FaGoogleDrive />} title="Google Drive" />
           <Card icon={<FaGithub />} title="GitHub" />
-          <Card icon={<FaSlack />} title="Slack" />
+          <Card icon={<SiGooglesheets />} title="Google Sheets" />
         </div>
       </aside>
 
@@ -67,10 +68,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Seção de Gráficos */}
-        <section className="mt-8">
-          <Charts />
-        </section>
+ 
       </div>
 			</main>
 		</div>
