@@ -22,6 +22,14 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { ApplicationCreate } from '../model';
+// @ts-ignore
+import type { ApplicationRead } from '../model';
+// @ts-ignore
+import type { ApplicationReadList } from '../model';
+// @ts-ignore
+import type { ApplicationTokenRequestWithGrant } from '../model';
+// @ts-ignore
 import type { ConnectionCreateRequest } from '../model';
 // @ts-ignore
 import type { ConnectionPatchRequest } from '../model';
@@ -61,6 +69,8 @@ import type { PermissionResponse } from '../model';
 import type { PermissionUpdateRequest } from '../model';
 // @ts-ignore
 import type { PermissionsResponse } from '../model';
+// @ts-ignore
+import type { PublicAccessTokenResponse } from '../model';
 // @ts-ignore
 import type { SourceCreateRequest } from '../model';
 // @ts-ignore
@@ -114,23 +124,83 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get an Access Token
+         * @param {ApplicationTokenRequestWithGrant} applicationTokenRequestWithGrant 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAccessToken: async (applicationTokenRequestWithGrant: ApplicationTokenRequestWithGrant, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationTokenRequestWithGrant' is not null or undefined
+            assertParamExists('createAccessToken', 'applicationTokenRequestWithGrant', applicationTokenRequestWithGrant)
+            const localVarPath = `/applications/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationTokenRequestWithGrant, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create an Application
+         * @param {ApplicationCreate} applicationCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createApplication: async (applicationCreate: ApplicationCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationCreate' is not null or undefined
+            assertParamExists('createApplication', 'applicationCreate', applicationCreate)
+            const localVarPath = `/applications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -158,18 +228,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -204,18 +262,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -252,18 +298,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -305,18 +339,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -353,18 +375,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -398,18 +408,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -447,18 +445,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -467,6 +453,40 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(workspaceCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Deletes an Application
+         * @param {string} applicationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteApplication: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('deleteApplication', 'applicationId', applicationId)
+            const localVarPath = `/applications/{applicationId}`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -495,18 +515,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -542,18 +550,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -587,18 +583,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -634,18 +618,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -680,17 +652,39 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
 
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get an Application detail
+         * @param {string} applicationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplication: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('getApplication', 'applicationId', applicationId)
+            const localVarPath = `/applications/{applicationId}`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -726,18 +720,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -772,17 +754,35 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
 
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDocumentation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -848,18 +848,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -893,18 +881,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -940,18 +916,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -986,18 +950,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (sourceId !== undefined) {
                 localVarQueryParameter['sourceId'] = sourceId;
@@ -1045,18 +997,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1090,18 +1030,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1110,6 +1038,36 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(initiateOauthRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Applications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/applications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1138,18 +1096,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (workspaceIds) {
                 localVarQueryParameter['workspaceIds'] = workspaceIds;
@@ -1200,18 +1146,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (workspaceIds) {
                 localVarQueryParameter['workspaceIds'] = workspaceIds;
@@ -1269,18 +1203,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (connectionId !== undefined) {
                 localVarQueryParameter['connectionId'] = connectionId;
@@ -1364,18 +1286,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1407,18 +1317,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
@@ -1461,18 +1359,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (workspaceIds) {
                 localVarQueryParameter['workspaceIds'] = workspaceIds;
@@ -1525,18 +1411,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1583,18 +1457,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
             if (workspaceIds) {
                 localVarQueryParameter['workspaceIds'] = workspaceIds;
             }
@@ -1609,6 +1471,43 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (offset !== undefined) {
                 localVarQueryParameter['offset'] = offset;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Redirected to by identity providers after authentication.
+         * @summary Receive OAuth callbacks
+         * @param {{ [key: string]: string; }} [queryParams] Query parameters. Should contain state and code.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback: async (queryParams?: { [key: string]: string; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/oauth/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (queryParams !== undefined) {
+                for (const [key, value] of Object.entries(queryParams)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -1648,18 +1547,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1697,18 +1584,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1748,18 +1623,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1798,18 +1661,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1847,18 +1698,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1900,18 +1739,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1952,18 +1779,6 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1999,6 +1814,32 @@ export const PublicApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cancelJob(jobId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PublicApi.cancelJob']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get an Access Token
+         * @param {ApplicationTokenRequestWithGrant} applicationTokenRequestWithGrant 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAccessToken(applicationTokenRequestWithGrant: ApplicationTokenRequestWithGrant, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicAccessTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAccessToken(applicationTokenRequestWithGrant, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.createAccessToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create an Application
+         * @param {ApplicationCreate} applicationCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createApplication(applicationCreate: ApplicationCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationRead>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createApplication(applicationCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.createApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2095,6 +1936,19 @@ export const PublicApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Deletes an Application
+         * @param {string} applicationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteApplication(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationRead>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplication(applicationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.deleteApplication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Delete a Connection
          * @param {string} connectionId 
          * @param {*} [options] Override http request option.
@@ -2160,6 +2014,19 @@ export const PublicApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get an Application detail
+         * @param {string} applicationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getApplication(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationRead>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplication(applicationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.getApplication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get Connection details
          * @param {string} connectionId 
          * @param {*} [options] Override http request option.
@@ -2182,6 +2049,18 @@ export const PublicApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDestination(destinationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PublicApi.getDestination']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDocumentation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDocumentation(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.getDocumentation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2274,6 +2153,18 @@ export const PublicApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.initiateOAuth(initiateOauthRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PublicApi.initiateOAuth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List Applications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationReadList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplications(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.listApplications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2405,6 +2296,19 @@ export const PublicApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Redirected to by identity providers after authentication.
+         * @summary Receive OAuth callbacks
+         * @param {{ [key: string]: string; }} [queryParams] Query parameters. Should contain state and code.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthCallback(queryParams?: { [key: string]: string; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(queryParams, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublicApi.oauthCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Update Connection details
          * @param {string} connectionId 
@@ -2524,6 +2428,26 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @summary Get an Access Token
+         * @param {PublicApiCreateAccessToken0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAccessToken(requestParameters: PublicApiCreateAccessToken0Request, options?: RawAxiosRequestConfig): AxiosPromise<PublicAccessTokenResponse> {
+            return localVarFp.createAccessToken(requestParameters.applicationTokenRequestWithGrant, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create an Application
+         * @param {PublicApiCreateApplication0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createApplication(requestParameters: PublicApiCreateApplication0Request, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationRead> {
+            return localVarFp.createApplication(requestParameters.applicationCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create a connection
          * @param {PublicApiCreateConnection0Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2594,6 +2518,16 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @summary Deletes an Application
+         * @param {PublicApiDeleteApplication0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteApplication(requestParameters: PublicApiDeleteApplication0Request, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationRead> {
+            return localVarFp.deleteApplication(requestParameters.applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete a Connection
          * @param {PublicApiDeleteConnection0Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2644,6 +2578,16 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @summary Get an Application detail
+         * @param {PublicApiGetApplication0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplication(requestParameters: PublicApiGetApplication0Request, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationRead> {
+            return localVarFp.getApplication(requestParameters.applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get Connection details
          * @param {PublicApiGetConnection0Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2661,6 +2605,15 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
          */
         getDestination(requestParameters: PublicApiGetDestination0Request, options?: RawAxiosRequestConfig): AxiosPromise<DestinationResponse> {
             return localVarFp.getDestination(requestParameters.destinationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDocumentation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDocumentation(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2730,6 +2683,15 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
          */
         initiateOAuth(requestParameters: PublicApiInitiateOAuth0Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.initiateOAuth(requestParameters.initiateOauthRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Applications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplications(options?: RawAxiosRequestConfig): AxiosPromise<ApplicationReadList> {
+            return localVarFp.listApplications(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2809,6 +2771,16 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
          */
         listWorkspaces(requestParameters: PublicApiListWorkspaces0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<WorkspacesResponse> {
             return localVarFp.listWorkspaces(requestParameters.workspaceIds, requestParameters.includeDeleted, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Redirected to by identity providers after authentication.
+         * @summary Receive OAuth callbacks
+         * @param {PublicApiOauthCallback0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback(requestParameters: PublicApiOauthCallback0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.oauthCallback(requestParameters.queryParams, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2895,6 +2867,34 @@ export interface PublicApiCancelJob0Request {
      * @memberof PublicApiCancelJob0
      */
     readonly jobId: number
+}
+
+/**
+ * Request parameters for createAccessToken operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateAccessToken0Request
+ */
+export interface PublicApiCreateAccessToken0Request {
+    /**
+     * 
+     * @type {ApplicationTokenRequestWithGrant}
+     * @memberof PublicApiCreateAccessToken0
+     */
+    readonly applicationTokenRequestWithGrant: ApplicationTokenRequestWithGrant
+}
+
+/**
+ * Request parameters for createApplication operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateApplication0Request
+ */
+export interface PublicApiCreateApplication0Request {
+    /**
+     * 
+     * @type {ApplicationCreate}
+     * @memberof PublicApiCreateApplication0
+     */
+    readonly applicationCreate: ApplicationCreate
 }
 
 /**
@@ -3003,6 +3003,20 @@ export interface PublicApiCreateWorkspace0Request {
 }
 
 /**
+ * Request parameters for deleteApplication operation in PublicApi.
+ * @export
+ * @interface PublicApiDeleteApplication0Request
+ */
+export interface PublicApiDeleteApplication0Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiDeleteApplication0
+     */
+    readonly applicationId: string
+}
+
+/**
  * Request parameters for deleteConnection operation in PublicApi.
  * @export
  * @interface PublicApiDeleteConnection0Request
@@ -3070,6 +3084,20 @@ export interface PublicApiDeleteWorkspace0Request {
      * @memberof PublicApiDeleteWorkspace0
      */
     readonly workspaceId: string
+}
+
+/**
+ * Request parameters for getApplication operation in PublicApi.
+ * @export
+ * @interface PublicApiGetApplication0Request
+ */
+export interface PublicApiGetApplication0Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicApiGetApplication0
+     */
+    readonly applicationId: string
 }
 
 /**
@@ -3472,6 +3500,20 @@ export interface PublicApiListWorkspaces0Request {
 }
 
 /**
+ * Request parameters for oauthCallback operation in PublicApi.
+ * @export
+ * @interface PublicApiOauthCallback0Request
+ */
+export interface PublicApiOauthCallback0Request {
+    /**
+     * Query parameters. Should contain state and code.
+     * @type {{ [key: string]: string; }}
+     * @memberof PublicApiOauthCallback0
+     */
+    readonly queryParams?: { [key: string]: string; }
+}
+
+/**
  * Request parameters for patchConnection operation in PublicApi.
  * @export
  * @interface PublicApiPatchConnection0Request
@@ -3639,6 +3681,30 @@ export class PublicApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get an Access Token
+     * @param {PublicApiCreateAccessToken0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public createAccessToken(requestParameters: PublicApiCreateAccessToken0Request, options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createAccessToken(requestParameters.applicationTokenRequestWithGrant, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create an Application
+     * @param {PublicApiCreateApplication0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public createApplication(requestParameters: PublicApiCreateApplication0Request, options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createApplication(requestParameters.applicationCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Create a connection
      * @param {PublicApiCreateConnection0Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3723,6 +3789,18 @@ export class PublicApi extends BaseAPI {
 
     /**
      * 
+     * @summary Deletes an Application
+     * @param {PublicApiDeleteApplication0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public deleteApplication(requestParameters: PublicApiDeleteApplication0Request, options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).deleteApplication(requestParameters.applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete a Connection
      * @param {PublicApiDeleteConnection0Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3783,6 +3861,18 @@ export class PublicApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get an Application detail
+     * @param {PublicApiGetApplication0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public getApplication(requestParameters: PublicApiGetApplication0Request, options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getApplication(requestParameters.applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get Connection details
      * @param {PublicApiGetConnection0Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3803,6 +3893,17 @@ export class PublicApi extends BaseAPI {
      */
     public getDestination(requestParameters: PublicApiGetDestination0Request, options?: RawAxiosRequestConfig) {
         return PublicApiFp(this.configuration).getDestination(requestParameters.destinationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Root path, currently returns a redirect to the documentation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public getDocumentation(options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getDocumentation(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3886,6 +3987,17 @@ export class PublicApi extends BaseAPI {
      */
     public initiateOAuth(requestParameters: PublicApiInitiateOAuth0Request, options?: RawAxiosRequestConfig) {
         return PublicApiFp(this.configuration).initiateOAuth(requestParameters.initiateOauthRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Applications
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public listApplications(options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listApplications(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3981,6 +4093,18 @@ export class PublicApi extends BaseAPI {
      */
     public listWorkspaces(requestParameters: PublicApiListWorkspaces0Request = {}, options?: RawAxiosRequestConfig) {
         return PublicApiFp(this.configuration).listWorkspaces(requestParameters.workspaceIds, requestParameters.includeDeleted, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Redirected to by identity providers after authentication.
+     * @summary Receive OAuth callbacks
+     * @param {PublicApiOauthCallback0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicApi
+     */
+    public oauthCallback(requestParameters: PublicApiOauthCallback0Request = {}, options?: RawAxiosRequestConfig) {
+        return PublicApiFp(this.configuration).oauthCallback(requestParameters.queryParams, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

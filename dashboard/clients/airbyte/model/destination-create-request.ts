@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DestinationConfiguration } from './destination-configuration';
 
 /**
  * 
@@ -43,9 +40,9 @@ export interface DestinationCreateRequest {
     'workspaceId': string;
     /**
      * 
-     * @type {DestinationConfiguration}
+     * @type {any}
      * @memberof DestinationCreateRequest
      */
-    'configuration': DestinationConfiguration;
+    'configuration': any;
 }
 

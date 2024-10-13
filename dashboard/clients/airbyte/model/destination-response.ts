@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DestinationConfiguration } from './destination-configuration';
 
 /**
  * Provides details of a single destination.
@@ -49,9 +46,9 @@ export interface DestinationResponse {
     'workspaceId': string;
     /**
      * 
-     * @type {DestinationConfiguration}
+     * @type {any}
      * @memberof DestinationResponse
      */
-    'configuration': DestinationConfiguration;
+    'configuration': any;
 }
 

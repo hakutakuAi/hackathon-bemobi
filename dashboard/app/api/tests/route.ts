@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
-import AirbyteSingleton from '@/services/airbyte'
+import AirbyteService from '@/services/airbyte'
 
 export async function GET() {
-	const client = AirbyteSingleton.getClient()
+	const client = new AirbyteService()
+	await client.initialize()
 
 	const sources = await client.getSources()
 

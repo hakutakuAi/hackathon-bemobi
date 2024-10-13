@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { SourceConfiguration } from './source-configuration';
 
 /**
  * 
@@ -37,10 +34,10 @@ export interface SourcePatchRequest {
     'workspaceId'?: string;
     /**
      * 
-     * @type {SourceConfiguration}
+     * @type {any}
      * @memberof SourcePatchRequest
      */
-    'configuration'?: SourceConfiguration;
+    'configuration'?: any;
     /**
      * Optional secretID obtained through the  OAuth redirect flow.
      * @type {string}

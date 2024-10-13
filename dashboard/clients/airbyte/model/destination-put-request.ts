@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DestinationConfiguration } from './destination-configuration';
 
 /**
  * 
@@ -31,9 +28,9 @@ export interface DestinationPutRequest {
     'name': string;
     /**
      * 
-     * @type {DestinationConfiguration}
+     * @type {any}
      * @memberof DestinationPutRequest
      */
-    'configuration': DestinationConfiguration;
+    'configuration': any;
 }
 

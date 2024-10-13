@@ -13,16 +13,25 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { OAuthActorNames } from './oauth-actor-names';
 
 /**
- * POST body for initiating OAuth via the public API
+ * 
  * @export
  * @interface InitiateOauthRequest
  */
 export interface InitiateOauthRequest {
+    /**
+     * The name of the source to authenticate to. Deprecated - use sourceType instead.
+     * @type {string}
+     * @memberof InitiateOauthRequest
+     */
+    'name'?: string;
+    /**
+     * The name of the source to authenticate to
+     * @type {string}
+     * @memberof InitiateOauthRequest
+     */
+    'sourceType'?: string;
     /**
      * The URL to redirect the user to with the OAuth secret stored in the secret_id query string parameter after authentication is complete.
      * @type {string}
@@ -41,13 +50,5 @@ export interface InitiateOauthRequest {
      * @memberof InitiateOauthRequest
      */
     'oAuthInputConfiguration'?: any;
-    /**
-     * 
-     * @type {OAuthActorNames}
-     * @memberof InitiateOauthRequest
-     */
-    'sourceType': OAuthActorNames;
 }
-
-
 

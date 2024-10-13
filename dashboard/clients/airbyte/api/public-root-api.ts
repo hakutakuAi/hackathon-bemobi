@@ -21,22 +21,20 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
-// @ts-ignore
-import type { OrganizationsResponse } from '../model';
 /**
- * PublicOrganizationsApi - axios parameter creator
+ * PublicRootApi - axios parameter creator
  * @export
  */
-export const PublicOrganizationsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const PublicRootApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Lists users organizations.
-         * @summary List all organizations for a user
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationsForUser: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/organizations`;
+        getDocumentation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -63,62 +61,62 @@ export const PublicOrganizationsApiAxiosParamCreator = function (configuration?:
 };
 
 /**
- * PublicOrganizationsApi - functional programming interface
+ * PublicRootApi - functional programming interface
  * @export
  */
-export const PublicOrganizationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = PublicOrganizationsApiAxiosParamCreator(configuration)
+export const PublicRootApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PublicRootApiAxiosParamCreator(configuration)
     return {
         /**
-         * Lists users organizations.
-         * @summary List all organizations for a user
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationsForUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationsForUser(options);
+        async getDocumentation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDocumentation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PublicOrganizationsApi.listOrganizationsForUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PublicRootApi.getDocumentation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * PublicOrganizationsApi - factory interface
+ * PublicRootApi - factory interface
  * @export
  */
-export const PublicOrganizationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = PublicOrganizationsApiFp(configuration)
+export const PublicRootApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PublicRootApiFp(configuration)
     return {
         /**
-         * Lists users organizations.
-         * @summary List all organizations for a user
+         * 
+         * @summary Root path, currently returns a redirect to the documentation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationsForUser(options?: RawAxiosRequestConfig): AxiosPromise<OrganizationsResponse> {
-            return localVarFp.listOrganizationsForUser(options).then((request) => request(axios, basePath));
+        getDocumentation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDocumentation(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * PublicOrganizationsApi - object-oriented interface
+ * PublicRootApi - object-oriented interface
  * @export
- * @class PublicOrganizationsApi
+ * @class PublicRootApi
  * @extends {BaseAPI}
  */
-export class PublicOrganizationsApi extends BaseAPI {
+export class PublicRootApi extends BaseAPI {
     /**
-     * Lists users organizations.
-     * @summary List all organizations for a user
+     * 
+     * @summary Root path, currently returns a redirect to the documentation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PublicOrganizationsApi
+     * @memberof PublicRootApi
      */
-    public listOrganizationsForUser(options?: RawAxiosRequestConfig) {
-        return PublicOrganizationsApiFp(this.configuration).listOrganizationsForUser(options).then((request) => request(this.axios, this.basePath));
+    public getDocumentation(options?: RawAxiosRequestConfig) {
+        return PublicRootApiFp(this.configuration).getDocumentation(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

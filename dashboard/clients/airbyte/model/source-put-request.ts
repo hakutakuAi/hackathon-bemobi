@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { SourceConfiguration } from './source-configuration';
 
 /**
  * 
@@ -31,9 +28,9 @@ export interface SourcePutRequest {
     'name': string;
     /**
      * 
-     * @type {SourceConfiguration}
+     * @type {any}
      * @memberof SourcePutRequest
      */
-    'configuration': SourceConfiguration;
+    'configuration': any;
 }
 

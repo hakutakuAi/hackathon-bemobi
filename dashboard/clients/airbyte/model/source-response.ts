@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { SourceConfiguration } from './source-configuration';
 
 /**
  * Provides details of a single source.
@@ -49,9 +46,9 @@ export interface SourceResponse {
     'workspaceId': string;
     /**
      * 
-     * @type {SourceConfiguration}
+     * @type {any}
      * @memberof SourceResponse
      */
-    'configuration': SourceConfiguration;
+    'configuration': any;
 }
 

@@ -16,12 +16,6 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { ActorTypeEnum } from './actor-type-enum';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { OAuthActorNames } from './oauth-actor-names';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { OAuthCredentialsConfiguration } from './oauth-credentials-configuration';
 
 /**
  * POST body for creating/updating workspace level OAuth credentials
@@ -36,17 +30,17 @@ export interface WorkspaceOAuthCredentialsRequest {
      */
     'actorType': ActorTypeEnum;
     /**
-     * 
-     * @type {OAuthActorNames}
+     * The name of the source i.e. google-ads
+     * @type {string}
      * @memberof WorkspaceOAuthCredentialsRequest
      */
-    'name': OAuthActorNames;
+    'name': string;
     /**
-     * 
-     * @type {OAuthCredentialsConfiguration}
+     * The configuration for this source/destination based on the OAuth section of the relevant specification.
+     * @type {object}
      * @memberof WorkspaceOAuthCredentialsRequest
      */
-    'configuration': OAuthCredentialsConfiguration | null;
+    'configuration': object;
 }
 
 

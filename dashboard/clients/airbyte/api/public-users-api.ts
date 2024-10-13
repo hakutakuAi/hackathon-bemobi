@@ -53,18 +53,6 @@ export const PublicUsersApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication basicAuth required
-            // http basic authentication required
-            setBasicAuthToObject(localVarRequestOptions, configuration)
-
-            // authentication clientCredentials required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "clientCredentials", [], configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
