@@ -1,44 +1,92 @@
-# hackathon-bemobi
+# 📊 Hackathon Bemobi - Hakutaku AI
 
-## Pitch deck
-[![Video do pitch](https://img.youtube.com/vi/vDbem3bAJi8/0.jpg)](https://www.youtube.com/watch?v=vDbem3bAJi8)]
+![Hakutaku Logo](https://github.com/user-attachments/assets/754ee7ce-a5ca-40d5-8110-381280d4e89c)
 
-## Demo da solução deployada
+O **Hakutaku AI** é um assistente de IA generativa desenvolvido para o **Hackathon Bemobi**, com o objetivo de aumentar a eficiência de equipes, como analistas e Product Owners, ao centralizar informações essenciais sobre assinaturas recorrentes. A plataforma permite respostas rápidas e precisas sobre o comportamento dos assinantes, histórico de pagamentos e tendências de engajamento, consolidando dados fragmentados em uma única interface. Isso facilita a análise de dados e acelera as decisões estratégicas.
+
+## 🚀 Demo da Solução
+
 https://github.com/user-attachments/assets/be1946e1-1750-417c-a43e-6aab803be166
 
-![image](https://github.com/user-attachments/assets/754ee7ce-a5ca-40d5-8110-381280d4e89c)
+A plataforma utiliza tecnologias **open-source** para integrar dados e realizar processamento de linguagem natural, permitindo que os colaboradores façam perguntas diretamente ao sistema, sem a necessidade de codificação ou consultas manuais ao time de **Data Analytics**. Com o **Hakutaku**, é possível responder rapidamente a perguntas sobre o ciclo de vida do assinante, como a taxa de **churn** ou perfil de pagamento recorrente, otimizando o suporte interno e garantindo maior controle sobre as estratégias de retenção e personalização de ofertas.
 
-O projeto da Hakutaku no hackathon da Bemobi tem como objetivo melhorar a eficiência dos colaboradores, como analistas e Product Owners, centralizando informações essenciais sobre assinaturas recorrentes em um assistente de IA generativa. Em vez de depender de múltiplas fontes de dados fragmentadas, como bancos de dados internos e externos, a Hakutaku consolida essas informações em um único lugar, oferecendo respostas rápidas e precisas para consultas comuns sobre o comportamento dos assinantes, histórico de pagamentos e engajamento. Isso facilita a análise de dados e a tomada de decisões estratégicas de forma mais ágil.
+## 🎤 Pitch da Solução
 
-A plataforma utiliza tecnologias open-source para integração de dados e processamento de linguagem natural, permitindo que os colaboradores façam perguntas diretamente ao sistema sem a necessidade de codificação ou consulta manual a ferramentas ou ao time de Data Analytics. Dessa forma, os profissionais podem responder rapidamente a questões sobre o ciclo de vida do assinante, como taxa de churn ou perfil de pagamento recorrente, otimizando o suporte interno e garantindo maior controle sobre as estratégias de retenção e ofertas personalizadas.
+[![Vídeo do Pitch](https://img.youtube.com/vi/sxFaeHuzLio/0.jpg)](https://www.youtube.com/watch?v=sxFaeHuzLio)
 
-# Arquitetura
+## 🛠 Arquitetura
 
-![image](https://github.com/user-attachments/assets/c22fca78-d285-45d3-8f97-4836ece8edba)
+![Arquitetura](https://github.com/user-attachments/assets/c22fca78-d285-45d3-8f97-4836ece8edba)
 
+### Componentes Principais:
 
-# Estrutura de Pastas
+-   **[CloudFront](https://aws.amazon.com/cloudfront/)** + **[S3](https://aws.amazon.com/s3/)**: Fazem a distribuição rápida do dashboard web, desenvolvido com **[Next.js](https://nextjs.org/)**, permitindo que os colaboradores acessem a plataforma com baixa latência.
+-   **[AWS Lambda](https://aws.amazon.com/lambda/)** + **[VPC](https://aws.amazon.com/vpc/)**: Gerenciam as requisições do backend e as consultas aos dados armazenados em bancos como **[RDS](https://aws.amazon.com/rds/)** e serviços locais de **[Qdrant](https://qdrant.tech/)** e **[Airbyte](https://airbyte.com/)**, que possibilitam buscas vetoriais otimizadas e integração contínua de dados.
+-   **[Qdrant](https://qdrant.tech/)** + **[Airbyte](https://airbyte.com/)**: Operam localmente para garantir segurança adicional aos dados internos da empresa, mantendo um custo operacional reduzido.
+-   **[OpenAI](https://openai.com/)** + **[Cohere](https://cohere.com/)**: Modelos de linguagem usados para enriquecer as respostas às consultas dos colaboradores, otimizando a experiência e melhorando a precisão nas tomadas de decisão.
 
-### app/
-- **Admin/**: Diretório para funcionalidades da pagina administrativa.
-- **api/**: Arquivos relacionados a chamadas de API.
-- **Chat/**: Arquivos da pagina de chat
-  - **page.tsx**: Página principal do chat.
-- **fonts/**: Armazena fontes utilizadas no projeto.
+### Orquestração e Deploy:
 
+A infraestrutura é automatizada com **[Pulumi](https://www.pulumi.com/)** e **[SST](https://sst.dev/)**, facilitando o gerenciamento de recursos na AWS, desde o provisionamento até a configuração dos stacks das empresas. Isso garante a conformidade e eficiência operacional, com processamento seguro dos dados, respostas rápidas e controle de custos.
 
-### assets/
-- **icons/**: Contém ícones e imagens.
-  - **Avatar.svg**, **closeBar.svg**, **openBar.svg**, etc.
+## 📁 Estrutura do Repositório
 
-### clients/
-- **airbyte/**: Relacionado ao cliente Airbyte.
-  - **api/**: Arquivos de API para Airbyte.
-  - **model/**: Modelos de dados.
+-   **`dashboard/`**: Código-fonte do dashboard web desenvolvido em **[Next.js](https://nextjs.org/)**. A aplicação é Fullstack, utilizando **SSR** (Server-Side Rendering) e **API Routes** para comunicação com o backend.
+-   **`infrastructure/`**: Scripts para configurar a infraestrutura do **[Qdrant](https://qdrant.tech/)** e **[Airbyte](https://airbyte.com/)** em máquinas virtuais, com setup e configuração básicos.
 
-### components/
-- **ui/**: Componentes de interface do usuário.
-  - **Card.tsx**: Componente de card.
-  - **Chart.tsx**: Componente de gráficos.
-  - **Chat.tsx**: Componente de chat.
-  - **Sidebar.tsx**: Componente de barra lateral.
+## ⚙️ Setup Local
+
+### Pré-requisitos
+
+-   Recomendamos o uso de um sistema operacional [Unix](https://en.wikipedia.org/wiki/Unix) (Linux ou macOS), já que os scripts de setup foram desenvolvidos para esses ambientes.
+    -   **[Node.js](https://nodejs.org/)** + Algum gerenciador de pacotes **[npm](https://www.npmjs.com/)** ou **[Yarn](https://yarnpkg.com/)**.
+    -   **[Docker](https://www.docker.com/)** + **[Docker Compose](https://docs.docker.com/compose/)**.
+    -   **[OpenAI API Key](https://platform.openai.com/docs/guides/authentication)**.
+    -   **[Cohere API Key](https://cohere.com/)**.
+
+### Passos
+
+Siga os passos abaixo para rodar o projeto localmente:
+
+1. **Clone o repositório:**
+
+    ```bash
+    git clone git@github.com:hakutakuAi/hackathon-bemobi.git
+    ```
+
+2. **Acesse o diretório do projeto:**
+
+    ```bash
+    cd hackathon-bemobi
+    ```
+
+3. **Configure a infraestrutura local:**
+
+    ```bash
+    cd infrastructure
+    chmod +x setup.sh
+    ./setup.sh
+    ```
+
+4. **Instale as dependências do dashboard:**
+
+    ```bash
+    cd dashboard
+    npm install
+    ```
+
+5. **Configure as variáveis de ambiente:**
+
+    Copie o arquivo de exemplo `.env` e preencha as informações necessárias:
+
+    ```bash
+    cp .env.example .env.local
+    ```
+
+6. **Execute o dashboard localmente:**
+
+    ```bash
+    npm run dev
+    ```
+
+    Agora você pode acessar o dashboard em `http://localhost:3000` 🎉
