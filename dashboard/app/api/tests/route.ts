@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import QdrantSingleton from '@/services/qdrant'
+import AirbyteSingleton from '@/services/airbyte'
 
 export async function GET() {
-	const client = QdrantSingleton.getClient()
+	const client = AirbyteSingleton.getClient()
 
-	const collections = await client.getCollections()
+	const sources = await client.getSources()
 
-	return NextResponse.json(collections)
+	return NextResponse.json(sources)
 }

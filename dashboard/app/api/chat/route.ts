@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 			tools: {
 				getInformation: getInformationTool,
 			},
-			maxSteps: 3,
+			maxSteps: 2,
 		})
 
 		return result.toDataStreamResponse()
