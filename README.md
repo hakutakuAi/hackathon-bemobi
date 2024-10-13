@@ -11,3 +11,30 @@ A plataforma utiliza tecnologias open-source para integração de dados e proces
 # Arquitetura
 
 ![image](https://github.com/user-attachments/assets/c22fca78-d285-45d3-8f97-4836ece8edba)
+
+
+# Estrutura de Pastas
+
+### app/
+- **Admin/**: Diretório para funcionalidades da pagina administrativa.
+- **api/**: Arquivos relacionados a chamadas de API.
+- **Chat/**: Arquivos da pagina de chat
+  - **page.tsx**: Página principal do chat.
+- **fonts/**: Armazena fontes utilizadas no projeto.
+
+
+### assets/
+- **icons/**: Contém ícones e imagens.
+  - **Avatar.svg**, **closeBar.svg**, **openBar.svg**, etc.
+
+### clients/
+- **airbyte/**: Relacionado ao cliente Airbyte.
+  - **api/**: Arquivos de API para Airbyte.
+  - **model/**: Modelos de dados.
+
+### components/
+- **ui/**: Componentes de interface do usuário.
+  - **Card.tsx**: Componente de card.
+  - **Chart.tsx**: Componente de gráficos.
+  - **Chat.tsx**: Componente de chat.
+  - **Sidebar.tsx**: Componente de barra lateral.
