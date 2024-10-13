@@ -1,5 +1,7 @@
 # hackathon-bemobi
 
+video do pitch -> https://youtu.be/sxFaeHuzLio
+
 ![image](https://github.com/user-attachments/assets/754ee7ce-a5ca-40d5-8110-381280d4e89c)
 
 O projeto da Hakutaku no hackathon da Bemobi tem como objetivo melhorar a eficiência dos colaboradores, como analistas e Product Owners, centralizando informações essenciais sobre assinaturas recorrentes em um assistente de IA generativa. Em vez de depender de múltiplas fontes de dados fragmentadas, como bancos de dados internos e externos, a Hakutaku consolida essas informações em um único lugar, oferecendo respostas rápidas e precisas para consultas comuns sobre o comportamento dos assinantes, histórico de pagamentos e engajamento. Isso facilita a análise de dados e a tomada de decisões estratégicas de forma mais ágil.
