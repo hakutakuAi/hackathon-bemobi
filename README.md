@@ -6,6 +6,8 @@ O **Hakutaku AI** é um assistente de IA generativa desenvolvido para o **Hackat
 
 ## 🚀 Demo da Solução
 
+Aplicação disponível em: [hakutaku-bemobi.vercel.app/](hakutaku-bemobi.vercel.app/)
+
 https://github.com/user-attachments/assets/be1946e1-1750-417c-a43e-6aab803be166
 
 A plataforma utiliza tecnologias **open-source** para integrar dados e realizar processamento de linguagem natural, permitindo que os colaboradores façam perguntas diretamente ao sistema, sem a necessidade de codificação ou consultas manuais ao time de **Data Analytics**. Com o **Hakutaku**, é possível responder rapidamente a perguntas sobre o ciclo de vida do assinante, como a taxa de **churn** ou perfil de pagamento recorrente, otimizando o suporte interno e garantindo maior controle sobre as estratégias de retenção e personalização de ofertas.
