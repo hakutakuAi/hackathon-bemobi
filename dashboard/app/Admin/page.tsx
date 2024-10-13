@@ -72,8 +72,8 @@ const Home = () => {
             <div
               key={integration.connectionId}
               className="flex flex-col space-y-2"
-              onMouseEnter={() => setHoveredIntegrationId(integration.connectionId)} // Quando o mouse passa por cima
-              onMouseLeave={() => setHoveredIntegrationId(null)} // Quando o mouse sai de cima
+              onMouseEnter={() => setHoveredIntegrationId(integration.connectionId)}
+              onMouseLeave={() => setHoveredIntegrationId(null)}
             >
               <div className="flex items-center space-x-2">
                 {integration.source.sourceType === 'google-sheets' ? (

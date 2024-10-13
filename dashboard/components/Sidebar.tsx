@@ -3,13 +3,20 @@ import Image from 'next/image'
 import closeBar from '@/assets/closeBar.svg'
 import openBar from '@/assets/openBar.svg'
 import Logo from '@/assets/logo.svg'
+import { useRouter } from 'next/router'
 
 interface SidebarProps {
 	isOpen: boolean
 	toggleSidebar: () => void
+	
 }
 
+
+
+
+
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+
 	return (
 		<aside
 			className={`fixed top-0 left-0 h-screen p-5 bg-[#B24128] text-white transition-transform duration-300 transform ${
@@ -48,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 							<FaQuestionCircle className="h-5 w-5 mr-2" />
 							Help
 						</a>
-						<a href="#" className="flex items-center py-2 px-4 rounded hover:bg-gray-700 transition-colors">
+						<a href="Admin" className="flex items-center py-2 px-4 rounded hover:bg-gray-700 transition-colors">
 							<FaCog className="h-5 w-5 mr-2" />
 							Settings
 						</a>
