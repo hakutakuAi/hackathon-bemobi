@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useChat } from 'ai/react'; // Importando o hook useChat
+import { useChat } from 'ai/react';
 import Sidebar from '../components/Sidebar';
 import Image from 'next/image';  
 import openBar from '@/app/assets/openBar.svg'; 
@@ -11,8 +11,8 @@ const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
-    <div className="chat-container flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto max-h-[400px] mt-2"> 
+    <div className="chat-container flex flex-col h-full w-full">
+      <div className="flex-1 overflow-y-auto mt-2">
         {messages.map(m => (
           <div key={m.id} className={`message ${m.role} text-black`}>
             <strong>{m.role}:</strong> {m.content}
@@ -20,17 +20,19 @@ const Chat = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="fixed bottom-4 left-0 right-0 border-t border-gray-300 pt-2 bg-white"> 
-        <div className="flex items-center"> 
+      {/* Form always at the bottom */}
+      <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-3xl flex w-full bg-none">
+        <div className="flex items-center justify-between px-4 w-full bg-none " >
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Diga algo..."
-            className="flex-1 border p-2 rounded-lg text-black"  
+            className="flex-1 border p-4 rounded-lg  text-black bg-[#EDE9E2] focus:outline-none focus:border-gray-300"
+            style={{ width: '80%' }}
           />
           <button 
             type="submit" 
-            className="p-2 bg-amber-700 text-black rounded-r" 
+            className="p-4 bg-amber-700 text-black rounded-3xl"
           >
             Enviar
           </button>
@@ -48,7 +50,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex bg-[#EDE9E2] min-h-screen items-start font-[family-name:var(--font-geist-sans)] relative">
+    <div className="flex bg-[#EDE9E2] min-h-screen font-[family-name:var(--font-geist-sans)] relative">
       {!isOpen && (
         <button
           className="fixed top-4 left-4 z-10 p-2 bg-gray-800 text-black rounded"
@@ -60,11 +62,13 @@ const Home: React.FC = () => {
 
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
 
-      <main className={`flex-1 items-start p-10 px-40 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'} flex flex-col`}>
+      <main className={`flex-1 p-10 w-full transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'} flex flex-col`}>
         <p>logo</p>
-
-        {/* Adicionando o componente de chat */}
-        <Chat />
+        
+        {/* Chat component */}
+        <div className="flex flex-col h-full justify-between">
+          <Chat />
+        </div>
       </main>
     </div>
   );
