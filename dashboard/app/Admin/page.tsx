@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
 import Image from 'next/image'
-import { FaUser } from 'react-icons/fa'; // Exemplo usando um ícone de usuário
-import { FaGoogleDrive, FaGithub, FaSlack } from 'react-icons/fa'; // Ícones de Drive, GitHub e Slack
+import { FaUser } from 'react-icons/fa';
+import { FaGoogleDrive, FaGithub, FaSlack } from 'react-icons/fa'; 
 import openBar from '@/assets/openBar.svg'
 import { SiGooglesheets } from 'react-icons/si';
 import Logo from '@/assets/logo.svg'
 import Chat from '@/components/Chat'
 import Link from 'next/link';
+import { SiNotion } from 'react-icons/si'; 
 
 import Charts from '@/components/Chart';
 import DotPattern from '@/components/ui/dot-pattern'
@@ -24,7 +25,7 @@ interface SourceConfiguration {
       client_secret: string;
       refresh_token: string;
     };
-    spreadsheet_id: string; // Aqui está a propriedade que você quer acessar
+    spreadsheet_id: string; 
     names_conversion: boolean;
   }
   
@@ -98,41 +99,44 @@ const Home = () => {
       <aside className="w-54 bg-[#B24128] text-white p-4 pt-20 h-screen">
         <h3 className="text-lg font-bold mb-6  ml-7 mt-2 self-center">Conectores</h3>
         <div className="space-y-6">
-          {integrations.map((integration) => (
-            <div
-              key={integration.connectionId}
-              className="flex flex-col space-y-2"
-              onMouseEnter={() => setHoveredIntegrationId(integration.connectionId)}
-              onMouseLeave={() => setHoveredIntegrationId(null)}
-            >
-              <div className="flex items-center space-x-2">
-              {integration.source.sourceType === 'google-sheets' ? (
-              <Link href={integration.source.configuration.spreadsheet_id} target="_blank">
-                <SiGooglesheets size={24} className="cursor-pointer" />
-              </Link>
-            ) : (
-              <FaGoogleDrive size={24} />
-            )}
-                <span>{integration.name}</span>
-              </div>
-              <span className="text-sm">Status: {integration.status}</span>
+        {integrations.map((integration) => (
+  <div
+    key={integration.connectionId}
+    className="flex flex-col space-y-2"
+    onMouseEnter={() => setHoveredIntegrationId(integration.connectionId)}
+    onMouseLeave={() => setHoveredIntegrationId(null)}
+  >
+    <div className="flex items-center space-x-2">
+      {integration.source.sourceType === 'google-sheets' ? (
+        <Link href={integration.source.configuration.spreadsheet_id} target="_blank">
+          <SiGooglesheets size={24} className="cursor-pointer" />
+        </Link>
+      ) : integration.source.sourceType === 'notion' ? (  // Condição para o Notion
+          <SiNotion size={24} className="cursor-pointer" />
+      ) : (
+        <FaGoogleDrive size={24} />
+      )}
+      <span>{integration.name}</span>
+    </div>
+    <span className="text-sm">Status: {integration.status}</span>
 
-              {/* Mostrar detalhes se o conector estiver focado */}
-              {hoveredIntegrationId === integration.connectionId && (
-                <div className="mt-2 p-2 bg-gray-700 rounded text-sm">
-                  <p>
-                    <strong>Fonte:</strong> {integration.source.name} ({integration.source.sourceType})
-                  </p>
-                  <p>
-                    <strong>Destino:</strong> {integration.destination.name} ({integration.destination.destinationType || 'N/A'})
-                  </p>
-                  <p>
-                    <strong>Sincronização:</strong> {integration.schedule.basicTiming}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
+    {/* Mostrar detalhes se o conector estiver focado */}
+    {hoveredIntegrationId === integration.connectionId && (
+      <div className="mt-2 p-2 bg-gray-700 rounded text-sm">
+        <p>
+          <strong>Fonte:</strong> {integration.source.name} ({integration.source.sourceType})
+        </p>
+        <p>
+          <strong>Destino:</strong> {integration.destination.name} ({integration.destination.destinationType || 'N/A'})
+        </p>
+        <p>
+          <strong>Sincronização:</strong> {integration.schedule.basicTiming}
+        </p>
+      </div>
+    )}
+  </div>
+))}
+
         </div>
       </aside>
     </div>
