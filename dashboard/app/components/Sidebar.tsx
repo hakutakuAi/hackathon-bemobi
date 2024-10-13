@@ -19,8 +19,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       {/* Container para a logo e botão de abrir/fechar */}
       <div className="flex flex-col items-center">
         {/* Logo */}
-        <div className="flex flex-row justify-between w-full items-center">
-          <Image src={Logo} alt="Logo" width={80} height={80} className="mr-2" />
+        <div className="flex flex-row justify-center w-full items-center">
+          <Image src={Logo} alt="Logo" width={80} height={80} className="mr-5" />
           {/* Botão de abrir/fechar dentro da sidebar */}
           <button onClick={toggleSidebar} className="p-2">
             {isOpen ? (

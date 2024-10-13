@@ -61,7 +61,7 @@ const Chat = () => {
             )}
             <div
               className={`p-3 rounded-lg ${
-                m.role === 'user' ? 'bg-[#D5CCC9] text-black' : 'bg-none text-black'
+                m.role === 'user' ? 'bg-[#D5CCC9] text-black rounded-3xl' : 'bg-none text-black'
               } max-w-xs`}
             >
               {m.isLoading ? (
@@ -73,7 +73,7 @@ const Chat = () => {
               )}
             </div>
             {m.role === 'user' && (
-              <Image src={userIcon} alt="User Icon" width={30} height={30} className="ml-2" />
+              <Image src={userIcon} alt="User Icon" width={40} height={40} className="ml-2" />
             )}
           </div>
         ))}
