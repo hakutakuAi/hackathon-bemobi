@@ -1,6 +1,10 @@
 # hackathon-bemobi
 
-video do pitch -> https://youtu.be/sxFaeHuzLio
+## Pitch deck
+[![Video do pitch](https://img.youtube.com/vi/vDbem3bAJi8/0.jpg)](https://www.youtube.com/watch?v=vDbem3bAJi8)]
+
+## Demo da solução deployada
+https://github.com/user-attachments/assets/be1946e1-1750-417c-a43e-6aab803be166
 
 ![image](https://github.com/user-attachments/assets/754ee7ce-a5ca-40d5-8110-381280d4e89c)
 
