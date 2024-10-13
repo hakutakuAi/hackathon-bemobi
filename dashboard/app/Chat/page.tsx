@@ -50,7 +50,7 @@ const Chat = () => {
 
   return (
     <div className="chat-container px-40 flex flex-col h-full w-full">
-      <div className="flex-1 overflow-y-auto mt-2">
+      <div className="flex-1 overflow-y-auto mFpet-2">
         {displayMessages.map((m, index) => (
           <div
             key={m.id}
@@ -79,18 +79,18 @@ const Chat = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-3xl flex w-full bg-none">
-        <div className="flex items-center justify-between px-4 w-full bg-none">
+      <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-full flex w-full bg-none">
+        <div className="flex justify-start items-start px-4 w-full bg-none">
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Diga algo..."
-            className="flex-1 border p-4 rounded-lg text-black bg-[#EDE9E2] focus:outline-none focus:border-none"
+            className="flex-1 border p-4 rounded-full text-black bg-[#EDE9E2] focus:outline-none focus:border-none"
             style={{ width: '80%' }}
           />
           <button
             type="submit"
-            className="p-1 bg-[#FF791F] text-black rounded-3xl"
+            className="p-1 bg-[#FF791F] text-black rounded-full"
           >
             <Send />
           </button>
