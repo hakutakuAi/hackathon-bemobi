@@ -44,18 +44,18 @@ const Chat = () => {
 
 
       {/* Form always at the bottom */}
-      <form onSubmit={handleSubmit} className="border border-[#FF791F] rounded-3xl flex w-full bg-none">
-        <div className="flex items-center justify-between px-4 w-full bg-none " >
+      <form onSubmit={handleSubmit} className="border-2 border-[#FF791F] rounded-full flex w-ful">
+        <div className="flex justify-start w-full bg-none " >
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Diga algo..."
-            className="flex-1 border p-4 rounded-lg  text-black bg-[#EDE9E2] focus:outline-none focus:border-none"
+            className="flex-1 p-4 rounded-full border-none  text-black bg-[#EDE9E2] focus:outline-none focus:border-none"
             style={{ width: '80%' }}
           />
           <button 
             type="submit" 
-            className="p-1 bg-[#FF791F] text-black rounded-3xl"
+            className="p-1 bg-[#FF791F] text-black rounded-full border-none"
           >
             <Send/>
           </button>
