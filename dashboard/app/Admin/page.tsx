@@ -65,8 +65,8 @@ const Home = () => {
 
 			<main className={`flex-1 flex flex-row relative z-10 overflow-hidden transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'}`}>
                       <div className="flex items-center">
-      <aside className="w-64 bg-[#B24128] text-white p-4 pt-20 h-screen">
-        <h3 className="text-lg font-bold mb-6">Conectores</h3>
+      <aside className="w-54 bg-[#B24128] text-white p-4 pt-20 h-screen">
+        <h3 className="text-lg font-bold mb-6  ml-7 mt-2 self-center">Conectores</h3>
         <div className="space-y-6">
           {integrations.map((integration) => (
             <div
