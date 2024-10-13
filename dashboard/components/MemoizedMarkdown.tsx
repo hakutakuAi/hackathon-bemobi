@@ -4,7 +4,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/stackoverflow-light.css'
 import { useMemo } from 'react'
 
-const MemoizedMarkdown = ({ content }) => {
+const MemoizedMarkdown = ({ content: content }: { content: string }) => {
 	return useMemo(
 		() => (
 			<ReactMarkdown

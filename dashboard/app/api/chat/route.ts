@@ -6,7 +6,7 @@ import { embed } from 'ai'
 
 export const maxDuration = 15
 
-export const getInformationTool = tool({
+const getInformationTool = tool({
 	description: `Retrieve relevant information from the knowledge base to answer the user's question. Utilize the Qdrant vector database to find the most semantically similar documents.`,
 	parameters: z.object({
 		question: z.string().describe("The user's question for which information is sought."),
@@ -36,7 +36,7 @@ export const getInformationTool = tool({
 			}
 
 			console.log('Executing getInformationTool with question:', question)
-			const searchResults = await client.search(collectionName, { vector: embedding, limit: 2 })
+			const searchResults = await client.search(collectionName, { vector: embedding, limit: 4 })
 			console.log('Search results:', searchResults)
 
 			if (!searchResults || searchResults.length === 0) {
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 			tools: {
 				getInformation: getInformationTool,
 			},
-			maxSteps: 2,
+			maxSteps: 3,
 		})
 
 		return result.toDataStreamResponse()
