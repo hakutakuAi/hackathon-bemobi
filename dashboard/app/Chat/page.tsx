@@ -5,13 +5,15 @@ import { useChat } from 'ai/react';
 import Sidebar from '../components/Sidebar';
 import Image from 'next/image';  
 import openBar from '@/app/assets/openBar.svg'; 
+import Send from '../assets/icons/send';
+import Logo from "@/app/assets/logo.svg"
 import closeBar from '@/app/assets/closeBar.svg'; 
 
 const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
-    <div className="chat-container flex flex-col h-full w-full">
+    <div className="chat-container px-40 flex flex-col h-full w-full">
       <div className="flex-1 overflow-y-auto mt-2">
         {messages.map(m => (
           <div key={m.id} className={`message ${m.role} text-black`}>
@@ -27,14 +29,14 @@ const Chat = () => {
             value={input}
             onChange={handleInputChange}
             placeholder="Diga algo..."
-            className="flex-1 border p-4 rounded-lg  text-black bg-[#EDE9E2] focus:outline-none focus:border-gray-300"
+            className="flex-1 border p-4 rounded-lg  text-black bg-[#EDE9E2] focus:outline-none focus:border-none"
             style={{ width: '80%' }}
           />
           <button 
             type="submit" 
-            className="p-4 bg-amber-700 text-black rounded-3xl"
+            className="p-1 bg-[#FF791F] text-black rounded-3xl"
           >
-            Enviar
+            <Send/>
           </button>
         </div>
       </form>
@@ -51,19 +53,25 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex bg-[#EDE9E2] min-h-screen font-[family-name:var(--font-geist-sans)] relative">
-      {!isOpen && (
-        <button
-          className="fixed top-4 left-4 z-10 p-2 bg-gray-800 text-black rounded"
-          onClick={toggleSidebar}
-        >
-          <Image src={openBar} alt="Abrir Menu" width={24} height={24} />
-        </button>
-      )}
+  {!isOpen && (
+  <div className="fixed top-4 left-4 z-10 flex items-center">
+    <button
+      className="p-2 text-black rounded"
+      onClick={toggleSidebar}
+          >
+            <div className='flex flex-row'>
+            <Image src={openBar} alt="Abrir Menu" width={24} height={24} />
+            <Image src={Logo} alt="Logo" width={70} height={70} />
+
+            </div>
+       
+    </button>
+  </div>
+)}
 
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
 
       <main className={`flex-1 p-10 w-full transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'} flex flex-col`}>
-        <p>logo</p>
         
         {/* Chat component */}
         <div className="flex flex-col h-full justify-between">
