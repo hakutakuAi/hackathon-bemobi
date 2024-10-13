@@ -14,7 +14,7 @@ const Chat = () => {
     <div className="chat-container flex flex-col h-full">
       <div className="flex-1 overflow-y-auto max-h-[400px] mt-2"> 
         {messages.map(m => (
-          <div key={m.id} className={`message ${m.role}`}>
+          <div key={m.id} className={`message ${m.role} text-black`}>
             <strong>{m.role}:</strong> {m.content}
           </div>
         ))}
@@ -26,7 +26,7 @@ const Chat = () => {
             value={input}
             onChange={handleInputChange}
             placeholder="Diga algo..."
-            className="flex-1 border p-2 rounded-l" 
+            className="flex-1 border p-2 rounded-lg text-black"  
           />
           <button 
             type="submit" 
