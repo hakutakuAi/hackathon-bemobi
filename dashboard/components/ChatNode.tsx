@@ -1,0 +1,157 @@
+'use client'
+
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
+import { Handle, Position, NodeProps, useReactFlow } from 'reactflow'
+import { useChat } from 'ai/react'
+import Image from 'next/image'
+import { GrSend } from 'react-icons/gr'
+import { FaStop, FaTrash, FaExpandAlt, FaCompressAlt } from 'react-icons/fa'
+import MemoizedMarkdown from '@/components/MemoizedMarkdown'
+import userIcon from '@/assets/Avatar.svg'
+import chatIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
+import chatIconThinking from '@/assets/HKTK-R02_AVATAR-FACE-BUSCA.png'
+
+const loadingMessages = ['Pensando com carinho...', 'Colocando as ideias no lugar...', 'Consultando minha bola de cristal...', 'Fazendo mágica nos bastidores...']
+const getRandomLoadingMessage = () => loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
+
+export function ChatNode({ id, data, selected }: NodeProps) {
+	const [isExpanded, setIsExpanded] = useState(false)
+	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat()
+	const { deleteElements } = useReactFlow()
+	const inputRef = useRef<HTMLInputElement>(null)
+
+	const toggleExpand = useCallback((event: React.MouseEvent) => {
+		event.stopPropagation()
+		setIsExpanded((prev) => !prev)
+	}, [])
+
+	const handleDelete = useCallback(
+		(event: React.MouseEvent) => {
+			event.stopPropagation()
+			deleteElements({ nodes: [{ id }] })
+		},
+		[deleteElements, id]
+	)
+
+	const handleMinimizedClick = useCallback(() => {
+		if (!isExpanded) {
+			setIsExpanded(true)
+		}
+	}, [isExpanded])
+
+	useEffect(() => {
+		if (isExpanded && inputRef.current) {
+			inputRef.current.focus()
+		}
+	}, [isExpanded])
+
+	const displayMessages = useMemo(() => {
+		return messages.reduce((acc: any[], message, index) => {
+			if (message.role === 'assistant') {
+				const lastMessage = acc[acc.length - 1]
+				if (lastMessage && lastMessage.role === 'assistant') {
+					if (message.content) {
+						lastMessage.content = message.content
+						lastMessage.isLoading = false
+					} else {
+						lastMessage.isLoading = true
+						lastMessage.loadingMessage = getRandomLoadingMessage()
+					}
+				} else {
+					acc.push({
+						...message,
+						isLoading: !message.content,
+						loadingMessage: !message.content ? getRandomLoadingMessage() : null,
+					})
+				}
+			} else {
+				acc.push(message)
+			}
+			return acc
+		}, [])
+	}, [messages])
+
+	const lastMessage = useMemo(() => {
+		if (displayMessages.length === 0) return 'Nenhuma mensagem ainda'
+		const content = displayMessages[displayMessages.length - 1].content
+		return content.length > 30 ? content.slice(0, 29) + '...' : content
+	}, [displayMessages])
+
+	const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		handleSubmit(e)
+	}
+
+	return (
+		<div
+			className={`bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 ease-in-out ${selected ? 'ring-2 ring-[#FF791F]' : ''}`}
+			style={{
+				width: isExpanded ? '400px' : '250px',
+				height: isExpanded ? '400px' : '80px',
+			}}
+			onClick={handleMinimizedClick}
+		>
+			<Handle type="source" id="top" position={Position.Top} style={{ background: '#FF791F', width: '10px', height: '10px' }} />
+			<Handle type="source" id="right" position={Position.Right} style={{ background: '#FF791F', width: '10px', height: '10px' }} />
+			<Handle type="source" id="bottom" position={Position.Bottom} style={{ background: '#FF791F', width: '10px', height: '10px' }} />
+			<Handle type="source" id="left" position={Position.Left} style={{ background: '#FF791F', width: '10px', height: '10px' }} />
+
+			<div className="bg-gradient-to-r from-[#FF791F] to-[#FF5300] p-3 flex justify-between items-center cursor-pointer" onClick={toggleExpand}>
+				<span className="text-white font-semibold truncate">{data.label}</span>
+				<div className="flex items-center space-x-2" onClick={(e) => e.stopPropagation()}>
+					<button onClick={toggleExpand} className="text-white hover:text-gray-200 transition-colors">
+						{isExpanded ? <FaCompressAlt size={16} /> : <FaExpandAlt size={16} />}
+					</button>
+					<button onClick={handleDelete} className="text-white hover:text-gray-200 transition-colors">
+						<FaTrash size={16} />
+					</button>
+				</div>
+			</div>
+			{isExpanded ? (
+				<div className="flex flex-col h-[calc(100%-56px)]" onClick={(e) => e.stopPropagation()}>
+					<div className="flex-1 overflow-y-auto p-3 space-y-3">
+						{displayMessages.map((m, index) => (
+							<div key={index} className={`flex items-start space-x-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+								{m.role === 'assistant' && <Image src={m.isLoading ? chatIconThinking : chatIcon} alt="Ícone do Chat" width={24} height={24} />}
+								<div className={`p-2 rounded-lg max-w-[80%] ${m.role === 'user' ? 'bg-[#D5CCC9] text-black' : 'bg-gradient-to-r from-[#F0F0F0] to-[#EDEDED] text-black'}`}>
+									{m.isLoading ? <span className="italic">{m.loadingMessage}</span> : <MemoizedMarkdown content={m.content} />}
+								</div>
+								{m.role === 'user' && <Image src={userIcon} alt="Ícone do Usuário" width={24} height={24} />}
+							</div>
+						))}
+					</div>
+					<form onSubmit={onFormSubmit} className="p-3">
+						<div className={`flex w-full bg-[#F5F5F5] border border-[#FF791F] rounded-full shadow-sm p-1 items-center ${isLoading ? 'opacity-50' : ''}`}>
+							<input
+								ref={inputRef}
+								value={input}
+								onChange={handleInputChange}
+								placeholder={isLoading ? 'Aguarde a resposta...' : 'Compartilhe seus pensamentos...'}
+								disabled={isLoading}
+								className="flex-1 p-2 rounded-full text-black bg-[#FDFDFD] focus:outline-none placeholder-gray-500 transition duration-300 ease-in-out text-sm"
+							/>
+							{isLoading ? (
+								<button onClick={stop} className="p-2 bg-red-500 text-white rounded-full shadow-sm hover:bg-red-600 transition-all duration-300 flex items-center justify-center">
+									<FaStop size={12} />
+								</button>
+							) : (
+								<button
+									type="submit"
+									disabled={isLoading}
+									className="p-2 bg-gradient-to-r from-[#FF791F] to-[#FF5300] text-white rounded-full shadow-sm hover:from-[#FF5A00] hover:to-[#FF3200] transition-all duration-300 flex items-center justify-center"
+								>
+									<GrSend size={12} />
+								</button>
+							)}
+						</div>
+					</form>
+				</div>
+			) : (
+				<div className="p-3 h-[24px] overflow-hidden text-ellipsis whitespace-nowrap flex items-center">
+					<Image src={chatIcon} alt="Ícone do Chat" width={16} height={16} className="mr-2" />
+					<span className="text-sm text-gray-600">{lastMessage}</span>
+				</div>
+			)}
+		</div>
+	)
+}

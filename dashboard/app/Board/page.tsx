@@ -1,93 +1,140 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { ReactFlow, Background, Controls, MiniMap, useNodesState, useEdgesState, addEdge, Connection, Edge, ReactFlowProvider, useReactFlow } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-import TextNode from '@/components/TextNode';
-import cursor from "@/assets/logo.svg";
+import React, { useCallback, useState } from 'react'
+import ReactFlow, {
+	Background,
+	Controls,
+	MiniMap,
+	useNodesState,
+	useEdgesState,
+	addEdge,
+	Connection,
+	Edge,
+	NodeTypes,
+	useReactFlow,
+	ReactFlowProvider,
+	Node,
+	XYPosition,
+	EdgeTypes,
+	OnConnect,
+	MarkerType,
+} from 'reactflow'
+import 'reactflow/dist/style.css'
+import { ChatNode } from '@/components/ChatNode'
+import BiDirectionalEdge from '@/components/BiDirectionalEdge'
+import { ConnectionMode } from '@xyflow/react'
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'textNode',
-    position: { x: 250, y: 5 },
-    data: { text: 'Arraste-me!' },
-  },
-];
-
-const initialEdges: Edge[] = [];
-
-const nodeTypes = {
-  textNode: TextNode,
-};
-
-function FlowComponent() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  
-  const { screenToFlowPosition } = useReactFlow();
-
-  const handleAddNode = (clientX: number, clientY: number) => {
-    const { x, y } = screenToFlowPosition({ x: clientX, y: clientY });
-
-    const newNode = {
-      id: `${nodes.length + 1}`,
-      type: 'textNode',
-      position: { x, y },
-      data: { text: `Card ${nodes.length + 1}` },
-    };
-
-    setNodes((prevNodes) => [...prevNodes, newNode]);
-  };
-
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      const reactFlowElement = document.querySelector('.react-flow');
-
-      // Verifica se o clique foi feito no espaço vazio (não em um nó)
-      const isNodeClicked = (event.target as HTMLElement).closest('.react-flow__node');
-
-      if (reactFlowElement && reactFlowElement.contains(event.target as Node) && !isNodeClicked) {
-        handleAddNode(event.clientX, event.clientY); 
-      }
-    };
-
-    window.addEventListener('click', handleClick);
-
-    return () => {
-      window.removeEventListener('click', handleClick);
-    };
-  }, [nodes]);
-
-  const onConnect = (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds));
-
-  return (
-    <ReactFlow
-      style={{
-        cursor: `url(${cursor}), auto`,
-      }}
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      fitView
-      className="react-flow"
-    >
-      <Background color="#B24128" gap={16} />
-      <Controls />
-      <MiniMap />
-    </ReactFlow>
-  );
+const nodeTypes: NodeTypes = {
+	chatNode: ChatNode,
 }
 
-export default function Home() {
-  return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlowProvider>
-        <FlowComponent />
-      </ReactFlowProvider>
-    </div>
-  );
+const edgeTypes: EdgeTypes = {
+	bidirectional: BiDirectionalEdge,
+}
+
+const initialNodes: Node[] = [
+	{
+		id: `${Date.now()}`,
+		type: 'chatNode',
+		position: { x: 250, y: 5 },
+		data: { label: 'Chat' },
+	},
+]
+
+const initialEdges: Edge[] = []
+
+function FlowComponent() {
+	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+	const { project } = useReactFlow()
+	const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null)
+
+	const onConnect: OnConnect = useCallback((params) => setEdges((eds) => addEdge({ ...params, type: 'bidirectional', markerEnd: { type: MarkerType.ArrowClosed } }, eds)), [setEdges])
+
+	const handleContextMenu = useCallback(
+		(event: React.MouseEvent) => {
+			event.preventDefault()
+			const reactFlowBounds = document.querySelector('.react-flow')?.getBoundingClientRect()
+			if (reactFlowBounds) {
+				const position = project({
+					x: event.clientX - reactFlowBounds.left,
+					y: event.clientY - reactFlowBounds.top,
+				})
+				setContextMenu({ x: event.clientX, y: event.clientY })
+			}
+		},
+		[project]
+	)
+
+	const handleAddNode = useCallback(
+		(position: XYPosition) => {
+			const newNode: Node = {
+				id: `${Date.now()}`,
+				type: 'chatNode',
+				position,
+				data: { label: 'Chat' },
+			}
+			setNodes((nds) => nds.concat(newNode))
+			setContextMenu(null)
+		},
+		[setNodes]
+	)
+
+	const closeContextMenu = useCallback(() => {
+		setContextMenu(null)
+	}, [])
+
+	return (
+		<div style={{ width: '100%', height: '100%' }} onContextMenu={handleContextMenu} onClick={closeContextMenu}>
+			<ReactFlow
+				nodes={nodes}
+				edges={edges}
+				onNodesChange={onNodesChange}
+				onEdgesChange={onEdgesChange}
+				onConnect={onConnect}
+				nodeTypes={nodeTypes}
+				edgeTypes={edgeTypes}
+				defaultEdgeOptions={{ type: 'bidirectional' }}
+				fitView
+				connectionMode={ConnectionMode.Loose}
+			>
+				<Background color="#f0f0f0" gap={16} />
+				<Controls />
+				<MiniMap />
+			</ReactFlow>
+			{contextMenu && (
+				<div
+					style={{
+						position: 'absolute',
+						top: contextMenu.y,
+						left: contextMenu.x,
+						background: 'white',
+						boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
+						borderRadius: '4px',
+						zIndex: 1000,
+					}}
+				>
+					<button onClick={() => handleAddNode(project({ x: contextMenu.x, y: contextMenu.y }))} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+						Novo Chat
+					</button>
+				</div>
+			)}
+		</div>
+	)
+}
+
+function FlowWithProvider() {
+	return (
+		<ReactFlowProvider>
+			<FlowComponent />
+		</ReactFlowProvider>
+	)
+}
+
+export default function EnhancedFlowChat() {
+	return (
+		<div style={{ width: '100vw', height: '100vh' }}>
+			<FlowWithProvider />
+		</div>
+	)
 }

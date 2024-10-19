@@ -5,11 +5,9 @@ import Sidebar from '@/components/Sidebar'
 import Chat from '@/components/Chat'
 import DotPattern from '@/components/ui/dot-pattern'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
 
 const ChatPage = () => {
 	const [isSidebarExpanded, setIsSidebarExpanded] = useState(false)
-	const router = useRouter()
 
 	return (
 		<div className="relative flex min-h-screen bg-[#EDE9E2] font-[family-name:var(--font-geist-sans)] overflow-hidden">
