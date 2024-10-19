@@ -48,9 +48,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 					</div>
 
 					<div className="flex flex-col items-center space-y-4 pb-4">
-						<a href="#" className="flex items-center py-2 px-4 rounded hover:bg-gray-700 transition-colors">
+						<a href="/Board" className="flex items-center py-2 px-4 rounded hover:bg-gray-700 transition-colors">
 							<FaQuestionCircle className="h-5 w-5 mr-2" />
-							Help
+							Board
 						</a>
 						<a href="Admin" className="flex items-center py-2 px-4 rounded hover:bg-gray-700 transition-colors">
 							<FaCog className="h-5 w-5 mr-2" />
