@@ -7,7 +7,7 @@ import AsideMenu from '@/components/BoardSideBar';
 
 export default function BoardLayout({ children }: { children: ReactNode }) {
   return (
-      <div className='w-screen h-screen flex flex-row'>
+    <div className='w-screen h-screen flex flex-row'>
            <AsideMenu/>
               {children}
     </div>

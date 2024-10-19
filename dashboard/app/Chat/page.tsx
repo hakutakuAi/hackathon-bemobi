@@ -13,15 +13,12 @@ import { useRouter } from 'next/navigation'
 const Home = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const router = useRouter()
-
 	const toggleSidebar = () => {
 		setIsOpen(!isOpen)
 	}
-
 	const handleLogin = () => {
 		router.push('/Admin')
 	}
-
 	return (
 		<div className="relative flex min-h-screen bg-[#EDE9E2] font-[family-name:var(--font-geist-sans)] overflow-hidden">
 			<div className="absolute inset-0 z-0 overflow-hidden">
@@ -37,9 +34,7 @@ const Home = () => {
 					</button>
 				</div>
 			)}
-
 			<Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-
 			<main className={`flex-1 flex flex-col relative z-10 overflow-hidden transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'}`}>
 				<div className="flex-1 overflow-hidden">
 					<Chat />

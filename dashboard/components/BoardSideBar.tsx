@@ -1,36 +1,22 @@
 import React from 'react';
 import Logo from "@/assets/logo.svg"
 import Image from 'next/image'
+import cursor from "@/assets/logo.svg"
+import { AiOutlineBgColors } from "react-icons/ai";
+
 
 const AsideMenu: React.FC = () => (
   <aside className="flex">
-    <div className="flex h-screen w-12 flex-col items-center space-y-8 border-r border-slate-300 bg-none py-8 dark:border-slate-700 dark:bg-slate-900 sm:w-16">
+    <div className="flex h-screen w-12 flex-col items-center space-y-8 border-r border-[#B24128] bg-none py-8 dark:border-slate-700 dark:bg-slate-900 sm:w-16">
             {/* Logo */}
             
       <Image src={Logo} alt='logo' className='p-2' />
 
-      {/* New conversation */}
       <a
         href="#"
         className="rounded-lg p-1.5 text-slate-500 transition-colors duration-200 hover:bg-slate-200 focus:outline-none dark:text-slate-400 dark:hover:bg-slate-800"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M8 9h8"></path>
-          <path d="M8 13h6"></path>
-          <path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5"></path>
-          <path d="M16 19h6"></path>
-          <path d="M19 16v6"></path>
-        </svg>
+       <AiOutlineBgColors className='text-2xl text-[#B24128]' />
       </a>
 
       {/* Conversations */}
@@ -40,7 +26,7 @@ const AsideMenu: React.FC = () => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-6 w-6 text-[#B24128]"
           viewBox="0 0 24 24"
           strokeWidth="2"
           stroke="currentColor"
@@ -61,7 +47,7 @@ const AsideMenu: React.FC = () => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-6 w-6 text-[#B24128]"
           viewBox="0 0 24 24"
           strokeWidth="2"
           stroke="currentColor"
@@ -82,7 +68,7 @@ const AsideMenu: React.FC = () => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-6 w-6 text-[#B24128]"
           viewBox="0 0 24 24"
           strokeWidth="2"
           stroke="currentColor"
@@ -104,7 +90,7 @@ const AsideMenu: React.FC = () => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-6 w-6 text-[#B24128]"
           viewBox="0 0 24 24"
           strokeWidth="2"
           stroke="currentColor"

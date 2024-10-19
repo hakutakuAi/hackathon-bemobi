@@ -4,6 +4,7 @@ import closeBar from '@/assets/closeBar.svg'
 import openBar from '@/assets/openBar.svg'
 import Logo from '@/assets/logo.svg'
 import { useRouter } from 'next/router'
+import Footer from "@/assets/footerHakutaku.png"
 
 interface SidebarProps {
 	isOpen: boolean
@@ -11,15 +12,11 @@ interface SidebarProps {
 	
 }
 
-
-
-
-
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
 	return (
 		<aside
-			className={`fixed top-0 left-0 h-screen p-5 bg-[#B24128] text-white transition-transform duration-300 transform ${
+			className={`fixed top-0 left-0 h-full p-5 bg-[#B24128] text-white transition-transform duration-300 transform ${
 				isOpen ? 'translate-x-0' : '-translate-x-full'
 			} w-64 z-20 overflow-y-auto shadow-lg`}
 		>
@@ -33,9 +30,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 			</div>
 
 			{isOpen && (
-				<div className="flex flex-col justify-between h-4/5 mt-8">
-					<div className="flex flex-col items-center">
-						<div className="text-xl text-black border-r-4 border-black border-b-4 mb-8 p-4 bg-[#D9D9D9] rounded-3xl shadow-sm">Nova conversa</div>
+				<div className="flex flex-col justify-between h-4/5 pt-8">
+					<div className="flex flex-col items-center justify-between">
+						<div className="text-xl text-black border-r-4 border-black border-b-4 p-4 bg-[#D9D9D9] rounded-3xl shadow-sm">Nova conversa</div>
 						<ul className="space-y-4">
 							<li>
 								<a href="#" className="block py-2 px-4 rounded hover:bg-gray-700 transition-colors">
@@ -63,7 +60,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 							<FaSignOutAlt className="h-5 w-5 mr-2" />
 							Logout
 						</a>
+						<div className='flex bottom-1'>
+						<Image src={Footer} alt='Footer'>
+
+						</Image>
+
 					</div>
+					</div>
+
 				</div>
 			)}
 		</aside>
