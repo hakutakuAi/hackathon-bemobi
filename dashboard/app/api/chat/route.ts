@@ -3,6 +3,7 @@ import { streamText, convertToCoreMessages, tool } from 'ai'
 import { z } from 'zod'
 import QdrantSingleton from '@/services/qdrant'
 import { embed } from 'ai'
+import { kv } from '@vercel/kv'
 
 export const maxDuration = 15
 
@@ -40,7 +41,7 @@ const getInformationTool = tool({
 			console.log('Search results:', searchResults)
 
 			if (!searchResults || searchResults.length === 0) {
-				return "Sorry, I couldn't find any relevant information."
+				return null
 			}
 
 			const information = searchResults
@@ -57,8 +58,21 @@ const getInformationTool = tool({
 			return information
 		} catch (error) {
 			console.error('Error executing getInformation tool:', error)
-			return 'Sorry, I encountered an error while fetching the information.'
+			return null
 		}
+	},
+})
+
+const storeMissingInformationTool = tool({
+	description: `Store information that is missing from the knowledge base.`,
+	parameters: z.object({
+		question: z.string().describe("The user's question that couldn't be answered."),
+		summary: z.string().describe('A brief summary of the missing information.'),
+	}),
+	execute: async ({ question, summary }) => {
+		const missingInfo = `Question: ${question}\nMissing: ${summary}`
+		await kv.lpush('missingInformation', missingInfo)
+		return 'Missing information stored successfully.'
 	},
 })
 
@@ -66,12 +80,15 @@ export async function POST(req: Request) {
 	try {
 		const { messages } = await req.json()
 
+		await kv.incr('chatCount')
+
 		const result = await streamText({
 			model: openai('gpt-4o'),
 			messages: convertToCoreMessages(messages),
-			system: `You are a helpful assistant. Check your knowledge base before answering any questions. Only respond to questions using information from tool calls.`,
+			system: `You are a helpful assistant. Check your knowledge base before answering any questions. If you can't find relevant information, use the storeMissingInformationTool to record what information is missing. Provide a brief, clear response to the user explaining that you don't have the information and that it will be added to the missing information list.`,
 			tools: {
 				getInformation: getInformationTool,
+				storeMissingInformation: storeMissingInformationTool,
 			},
 			maxSteps: 5,
 		})

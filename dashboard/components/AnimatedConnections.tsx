@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
 import { SiGooglesheets, SiNotion } from 'react-icons/si'
@@ -8,6 +8,9 @@ import { FaDatabase, FaUser } from 'react-icons/fa'
 import HakutakuIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
 import Image from 'next/image'
 import { Tooltip } from '@nextui-org/tooltip'
+import GoogleDriveLogo from '@/assets/google-drive.svg'
+import FlickeringGrid from '@/components/ui/flickering-grid'
+import useSWR from 'swr'
 
 interface Integration {
 	connectionId: string
@@ -43,7 +46,7 @@ const Circle = React.forwardRef<
 			<div
 				ref={ref}
 				className={cn(
-					'z-10 flex size-12 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] cursor-pointer transition-transform hover:scale-110',
+					'z-10 flex size-16 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] cursor-pointer transition-transform hover:scale-110',
 					className
 				)}
 				style={style}
@@ -57,34 +60,27 @@ const Circle = React.forwardRef<
 
 Circle.displayName = 'Circle'
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
 export default function AnimatedConnections() {
 	const containerRef = useRef<HTMLDivElement>(null)
-	const [integrations, setIntegrations] = useState<Integration[]>([])
-	const [circleRefs, setCircleRefs] = useState<React.RefObject<HTMLDivElement>[]>([])
+	const { data: integrations = [], error } = useSWR<Integration[]>('/api/integrations/connections', fetcher)
+	const circleRefs = integrations.map(() => React.createRef<HTMLDivElement>())
 	const hakutakuRef = useRef<HTMLDivElement>(null)
 	const userRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
-		const fetchIntegrations = async () => {
-			try {
-				const response = await fetch('/api/integrations/connections')
-				const data = await response.json()
-				setIntegrations(data)
-				setCircleRefs(data.map(() => React.createRef<HTMLDivElement>()))
-			} catch (error) {
-				console.error('Error fetching integrations:', error)
-			}
-		}
-
-		fetchIntegrations()
-	}, [])
+	if (error) {
+		console.error('Error fetching integrations:', error)
+	}
 
 	const getIcon = (sourceType: string) => {
 		switch (sourceType.toLowerCase()) {
 			case 'google-sheets':
-				return <SiGooglesheets className="h-6 w-6 text-green-600" />
+				return <SiGooglesheets className="h-6 w-6 text-green-600" width={32} height={32} />
 			case 'notion':
-				return <SiNotion className="h-6 w-6 text-gray-800" />
+				return <SiNotion className="h-6 w-6 text-gray-800" width={32} height={32} />
+			case 'google-drive':
+				return <Image src={GoogleDriveLogo} alt="Google Drive Logo" width={32} height={32} />
 			default:
 				return <FaDatabase className="h-6 w-6 text-blue-600" />
 		}
@@ -93,6 +89,8 @@ export default function AnimatedConnections() {
 	const handleSourceClick = (integration: Integration) => {
 		if (integration.source.sourceType.toLowerCase() === 'google-sheets') {
 			window.open(integration.source.configuration.spreadsheet_id, '_blank')
+		} else if (integration.source.sourceType.toLowerCase() === 'google-drive') {
+			window.open(integration.source.configuration.folder_url, '_blank')
 		}
 	}
 
@@ -102,14 +100,17 @@ export default function AnimatedConnections() {
 				<strong>{integration.name}</strong>
 			</p>
 			<p>Status: {integration.status}</p>
-			<p>Schedule: {integration.schedule.basicTiming}</p>
-			<p>Source: {integration.source.name}</p>
+			<p>Atualizações: {integration.schedule.basicTiming}</p>
+			<p>Fonte: {integration.source.name}</p>
 		</div>
 	)
 
 	return (
 		<div className="relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl" ref={containerRef}>
-			<div className="flex size-full flex-row items-stretch justify-between gap-10 max-w-lg">
+			<div className="absolute inset-0 z-0 overflow-hidden">
+				<FlickeringGrid className={cn('[mask-image:linear-gradient(to_bottom_right,white,rgba(255,255,255,0.6))]', 'opacity-60', 'w-full', 'h-full')} />
+			</div>
+			<div className="relative z-10 flex size-full flex-row items-stretch justify-between gap-10 max-w-lg">
 				<div className="flex flex-col justify-center gap-4">
 					{integrations.map((integration, index) => (
 						<Circle key={integration.connectionId} ref={circleRefs[index]} onClick={() => handleSourceClick(integration)} tooltipContent={getTooltipContent(integration)}>
@@ -130,9 +131,9 @@ export default function AnimatedConnections() {
 			</div>
 
 			{integrations.map((integration, index) => (
-				<AnimatedBeam key={integration.connectionId} containerRef={containerRef} fromRef={circleRefs[index]} toRef={hakutakuRef} duration={1} pathWidth={3} />
+				<AnimatedBeam key={integration.connectionId} containerRef={containerRef} fromRef={circleRefs[index]} toRef={hakutakuRef} pathWidth={3} />
 			))}
-			<AnimatedBeam containerRef={containerRef} fromRef={hakutakuRef} toRef={userRef} duration={1} pathWidth={3} />
+			<AnimatedBeam containerRef={containerRef} fromRef={hakutakuRef} toRef={userRef} pathWidth={3} />
 		</div>
 	)
 }
