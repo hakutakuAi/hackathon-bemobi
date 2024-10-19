@@ -11,7 +11,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { ChevronRight, LogOut, Settings, User, MessageCircle, HelpCircle, Cog, Menu, X } from 'lucide-react'
+import { LogOut, Settings, User, MessageCircle, HelpCircle, Cog, Menu, X } from 'lucide-react'
 import Logo from '@/assets/logo.svg'
 import HakutakuIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
 
@@ -26,9 +26,14 @@ export default function Sidebar({ onExpand }: { onExpand?: (expanded: boolean) =
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
 	const pathname = usePathname()
 
-	const toggleSidebar = () => {
-		setIsExpanded(!isExpanded)
-		onExpand?.(!isExpanded)
+	const expandSidebar = () => {
+		setIsExpanded(true)
+		onExpand?.(true)
+	}
+
+	const collapseSidebar = () => {
+		setIsExpanded(false)
+		onExpand?.(false)
 	}
 
 	const toggleMobileMenu = () => {
@@ -54,8 +59,10 @@ export default function Sidebar({ onExpand }: { onExpand?: (expanded: boolean) =
 				animate={{ width: isExpanded ? '240px' : '64px' }}
 				transition={{ duration: 0.3, ease: 'easeInOut' }}
 				className="fixed top-0 left-0 z-40 h-screen bg-[#B24128] text-white shadow-xl overflow-hidden hidden md:block"
+				onMouseEnter={expandSidebar}
+				onMouseLeave={collapseSidebar}
 			>
-				<SidebarContent isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
+				<SidebarContent isExpanded={isExpanded} />
 			</motion.aside>
 
 			<AnimatePresence>
@@ -77,7 +84,7 @@ export default function Sidebar({ onExpand }: { onExpand?: (expanded: boolean) =
 	)
 }
 
-function SidebarContent({ isExpanded, toggleSidebar, isMobile = false }: { isExpanded: boolean; toggleSidebar: () => void; isMobile?: boolean }) {
+function SidebarContent({ isExpanded, toggleSidebar, isMobile = false }: { isExpanded: boolean; toggleSidebar?: () => void; isMobile?: boolean }) {
 	const pathname = usePathname()
 
 	return (
@@ -87,9 +94,11 @@ function SidebarContent({ isExpanded, toggleSidebar, isMobile = false }: { isExp
 					<Image src={Logo} alt="Logo" width={isExpanded ? 40 : 32} height={isExpanded ? 40 : 32} />
 					{isExpanded && <span className="text-xl font-bold">Hakutaku</span>}
 				</Link>
-				<Button variant="ghost" size="icon" onClick={toggleSidebar} className={cn('text-white hover:bg-[#C25138]', isMobile ? 'flex' : 'md:flex hidden')}>
-					{isMobile ? <X className="h-6 w-6" /> : <ChevronRight className={cn('h-6 w-6 transition-transform', isExpanded && 'rotate-180')} />}
-				</Button>
+				{isMobile && (
+					<Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-white hover:bg-[#C25138]">
+						<X className="h-6 w-6" />
+					</Button>
+				)}
 			</div>
 
 			<ScrollArea className="flex-grow px-3">

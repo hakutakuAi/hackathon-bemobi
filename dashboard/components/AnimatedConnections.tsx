@@ -11,6 +11,7 @@ import { Tooltip } from '@nextui-org/tooltip'
 import GoogleDriveLogo from '@/assets/google-drive.svg'
 import FlickeringGrid from '@/components/ui/flickering-grid'
 import useSWR from 'swr'
+import toast from 'react-hot-toast'
 
 interface Integration {
 	connectionId: string
@@ -91,6 +92,10 @@ export default function AnimatedConnections() {
 			window.open(integration.source.configuration.spreadsheet_id, '_blank')
 		} else if (integration.source.sourceType.toLowerCase() === 'google-drive') {
 			window.open(integration.source.configuration.folder_url, '_blank')
+		} else {
+			toast('Não foi possível resgatar a fonte do dado', {
+				icon: '❌',
+			})
 		}
 	}
 

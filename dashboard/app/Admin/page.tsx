@@ -13,7 +13,7 @@ import HakutakuIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
 import NumberTicker from '@/components/ui/number-ticker'
 import { Tooltip } from '@nextui-org/react'
 import { Check, Loader2 } from 'lucide-react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Admin() {
@@ -67,7 +67,6 @@ export default function Admin() {
 
 	return (
 		<div className="relative flex min-h-screen bg-[#EDE9E2] font-sans overflow-hidden">
-			<Toaster position="top-right" />
 			<div className="absolute inset-0 z-0 overflow-hidden">
 				<DotPattern width={20} height={20} cx={1} cy={1} cr={1} className={cn('[mask-image:linear-gradient(to_bottom_right,white,rgba(255,255,255,0.6))]', 'opacity-60')} />
 			</div>

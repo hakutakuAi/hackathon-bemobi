@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { ReactFlow } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import './globals.css'
+import { Toaster } from 'react-hot-toast'
 
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
@@ -27,7 +27,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<Toaster position="top-right" />
+				{children}
+			</body>
 		</html>
 	)
 }
