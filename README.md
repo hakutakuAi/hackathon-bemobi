@@ -20,7 +20,7 @@ A plataforma utiliza tecnologias **open-source** para integrar dados e realizar 
 -   **Busca Vetorial**: Consultas otimizadas com **Qdrant** para análise de dados vetoriais e recomendações personalizadas.
 -   **Segurança e Privacidade**: Dados sensíveis armazenados localmente, com criptografia e controle de acesso restrito.s
 -   **Escalabilidade**: Infraestrutura automatizada com **Pulumi** e **SST**, garantindo alta disponibilidade e baixa latência.
--   **Baixo Custo**: Utilização de serviços locais e open-source para reduzir custos operacionais e manter a eficiência.
+-   **Baixo Custo Operacional**: Utilização de serviços locais e open-source para reduzir custos operacionais e manter a eficiência.
 
 ## 🎤 Pitch da Solução
 
