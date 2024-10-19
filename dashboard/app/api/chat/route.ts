@@ -96,7 +96,7 @@ export async function POST(req: Request) {
 		const result = await streamText({
 			model: openai('gpt-4o'),
 			messages: combinedMessages,
-			system: `You are a helpful assistant. Check your knowledge base before answering any questions. If you can't find relevant information, use the storeMissingInformationTool to record what information is missing. Provide a brief, clear response to the user explaining that you don't have the information and that it will be added to the missing information list. Only say informations that are true and verifiable by the getInformationTool.`,
+			system: `You are a helpful assistant. Before answering any questions, check your knowledge base for relevant information. If the information is unavailable, use the storeMissingInformationTool to log the missing information. When a user requests recommendations for products, especially for past customers, utilize current business models to create strategies aimed at re-engaging and recovering these clients. If you lack the necessary details, provide a brief, clear response indicating that the information is not available and will be added to the missing information list. Ensure all provided information is true and verifiable using the getInformationTool.`,
 			tools: {
 				getInformation: getInformationTool,
 				storeMissingInformation: storeMissingInformationTool,
