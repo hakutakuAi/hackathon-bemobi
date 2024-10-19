@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import AirbyteService from '@/services/airbyte'
+import { unstable_noStore as noStore } from 'next/cache'
 
 export async function GET() {
+	noStore()
+
 	const client = new AirbyteService()
 	await client.initialize()
 
