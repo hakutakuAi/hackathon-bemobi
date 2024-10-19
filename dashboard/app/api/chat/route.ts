@@ -78,13 +78,21 @@ const storeMissingInformationTool = tool({
 
 export async function POST(req: Request) {
 	try {
-		const { messages } = await req.json()
-
+		const { messages, nodeId, connectedNodes } = await req.json()
 		await kv.incr('chatCount')
+
+		const sharedContexts = await Promise.all(
+			connectedNodes.map(async (connectedNodeId: string) => {
+				const context = await kv.get(`sharedContext:${connectedNodeId}`)
+				return context || []
+			})
+		)
+
+		const combinedMessages = [...sharedContexts.flat(), ...convertToCoreMessages(messages)]
 
 		const result = await streamText({
 			model: openai('gpt-4o'),
-			messages: convertToCoreMessages(messages),
+			messages: combinedMessages,
 			system: `You are a helpful assistant. Check your knowledge base before answering any questions. If you can't find relevant information, use the storeMissingInformationTool to record what information is missing. Provide a brief, clear response to the user explaining that you don't have the information and that it will be added to the missing information list.`,
 			tools: {
 				getInformation: getInformationTool,
@@ -92,7 +100,7 @@ export async function POST(req: Request) {
 			},
 			maxSteps: 5,
 		})
-
+		await kv.set(`sharedContext:${nodeId}`, combinedMessages)
 		return result.toDataStreamResponse()
 	} catch (error) {
 		console.error('Error in ChatbotHandler:', error)

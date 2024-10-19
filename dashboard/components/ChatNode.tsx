@@ -14,10 +14,24 @@ import chatIconThinking from '@/assets/HKTK-R02_AVATAR-FACE-BUSCA.png'
 const loadingMessages = ['Pensando com carinho...', 'Colocando as ideias no lugar...', 'Consultando minha bola de cristal...', 'Fazendo mágica nos bastidores...']
 const getRandomLoadingMessage = () => loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
 
-export function ChatNode({ id, data, selected }: NodeProps) {
+export interface ChatNodeData {
+	label: string
+	updateSharedContext: (nodeId: string, messages: any[], connectedNodes: string[]) => void
+	sharedContext: any[]
+	connectedNodes: string[]
+}
+
+export function ChatNode({ id, data, selected }: NodeProps<ChatNodeData>) {
 	const [isExpanded, setIsExpanded] = useState(false)
-	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat()
-	const { deleteElements } = useReactFlow()
+	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat({
+		id: id,
+		initialMessages: data.sharedContext || [],
+		body: {
+			nodeId: id,
+			connectedNodes: data.connectedNodes || [],
+		},
+	})
+	const { deleteElements, getNode, getEdges } = useReactFlow()
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const toggleExpand = useCallback((event: React.MouseEvent) => {
@@ -44,6 +58,13 @@ export function ChatNode({ id, data, selected }: NodeProps) {
 			inputRef.current.focus()
 		}
 	}, [isExpanded])
+
+	useEffect(() => {
+		const connectedEdges = getEdges().filter((edge) => edge.source === id || edge.target === id)
+		const connectedNodes = connectedEdges.map((edge) => (edge.source === id ? edge.target : edge.source))
+
+		data.updateSharedContext(id, messages, connectedNodes)
+	}, [messages, id, data, getEdges])
 
 	const displayMessages = useMemo(() => {
 		return messages.reduce((acc: any[], message, index) => {
