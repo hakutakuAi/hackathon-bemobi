@@ -12,6 +12,16 @@ https://github.com/user-attachments/assets/4928741e-a062-43d1-a17d-439232d6bbf2
 
 A plataforma utiliza tecnologias **open-source** para integrar dados e realizar processamento de linguagem natural, permitindo que os colaboradores façam perguntas diretamente ao sistema, sem a necessidade de codificação ou consultas manuais ao time de **Data Analytics**. Com o **Hakutaku**, é possível responder rapidamente a perguntas sobre o ciclo de vida do assinante, como a taxa de **churn** ou perfil de pagamento recorrente, otimizando o suporte interno e garantindo maior controle sobre as estratégias de retenção e personalização de ofertas.
 
+## 📚 Principais features
+
+-   **Dashboard Web**: Interface intuitiva e responsiva, com gráficos e tabelas interativas para visualização de dados.
+-   **IA Generativa**: Respostas automáticas e personalizadas para perguntas sobre assinantes e comportamento de pagamentos.
+-   **Extração de Dados**: Integração contínua com **Airbyte** para coleta e processamento
+-   **Busca Vetorial**: Consultas otimizadas com **Qdrant** para análise de dados vetoriais e recomendações personalizadas.
+-   **Segurança e Privacidade**: Dados sensíveis armazenados localmente, com criptografia e controle de acesso restrito.s
+-   **Escalabilidade**: Infraestrutura automatizada com **Pulumi** e **SST**, garantindo alta disponibilidade e baixa latência.
+-   **Baixo Custo**: Utilização de serviços locais e open-source para reduzir custos operacionais e manter a eficiência.
+
 ## 🎤 Pitch da Solução
 
 [![Vídeo do Pitch](https://img.youtube.com/vi/sxFaeHuzLio/0.jpg)](https://www.youtube.com/watch?v=sxFaeHuzLio)
@@ -45,6 +55,8 @@ A infraestrutura é automatizada com **[Pulumi](https://www.pulumi.com/)** e **[
     -   **[Docker](https://www.docker.com/)** + **[Docker Compose](https://docs.docker.com/compose/)**.
     -   **[OpenAI API Key](https://platform.openai.com/docs/guides/authentication)**.
     -   **[Cohere API Key](https://cohere.com/)**.
+    -   **[Airbyte API Key](https://docs.airbyte.com/enterprise-setup/api-access-config)**.
+    -   **[Qdrant API Key](https://qdrant.tech/documentation/cloud/authentication/)**.
 
 ### Passos
 
