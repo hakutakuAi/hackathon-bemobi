@@ -37,7 +37,7 @@ const getInformationTool = tool({
 			}
 
 			console.log('Executing getInformationTool with question:', question)
-			const searchResults = await client.search(collectionName, { vector: embedding, limit: 10 })
+			const searchResults = await client.search(collectionName, { vector: embedding, limit: 5 })
 			console.log('Search results:', searchResults)
 
 			if (!searchResults || searchResults.length === 0) {
@@ -81,26 +81,33 @@ export async function POST(req: Request) {
 		const { messages, nodeId, connectedNodes } = await req.json()
 		await kv.incr('chatCount')
 
-		const sharedContexts = await Promise.all(
-			connectedNodes.map(async (connectedNodeId: string) => {
-				const context = await kv.get(`sharedContext:${connectedNodeId}`)
-				return context || []
-			})
-		)
+		let combinedMessages = convertToCoreMessages(messages)
 
-		const combinedMessages = [...sharedContexts.flat(), ...convertToCoreMessages(messages)]
+		if (nodeId && connectedNodes) {
+			const sharedContexts = await Promise.all(
+				connectedNodes.map(async (connectedNodeId: string) => {
+					const context = await kv.get(`sharedContext:${connectedNodeId}`)
+					return context || []
+				})
+			)
+			combinedMessages = [...sharedContexts.flat(), ...combinedMessages]
+		}
 
 		const result = await streamText({
 			model: openai('gpt-4o'),
 			messages: combinedMessages,
-			system: `You are a helpful assistant. Check your knowledge base before answering any questions. If you can't find relevant information, use the storeMissingInformationTool to record what information is missing. Provide a brief, clear response to the user explaining that you don't have the information and that it will be added to the missing information list.`,
+			system: `You are a helpful assistant. Check your knowledge base before answering any questions. If you can't find relevant information, use the storeMissingInformationTool to record what information is missing. Provide a brief, clear response to the user explaining that you don't have the information and that it will be added to the missing information list. Only say informations that are true and verifiable by the getInformationTool.`,
 			tools: {
 				getInformation: getInformationTool,
 				storeMissingInformation: storeMissingInformationTool,
 			},
 			maxSteps: 5,
 		})
-		await kv.set(`sharedContext:${nodeId}`, combinedMessages)
+
+		if (nodeId) {
+			await kv.set(`sharedContext:${nodeId}`, combinedMessages)
+		}
+
 		return result.toDataStreamResponse()
 	} catch (error) {
 		console.error('Error in ChatbotHandler:', error)
