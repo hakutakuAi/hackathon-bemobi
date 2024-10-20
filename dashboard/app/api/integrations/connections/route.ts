@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server'
 import AirbyteService from '@/services/airbyte'
 
 export const runtime = 'edge'
