@@ -15,6 +15,7 @@
 
 # Wrangler
 /.wrangler/
+/.worker-next/
 
 # production
 /build

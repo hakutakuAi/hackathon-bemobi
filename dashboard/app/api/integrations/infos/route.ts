@@ -1,8 +1,6 @@
 import QdrantSingleton from '@/services/qdrant'
 import { kv } from '@vercel/kv'
 
-export const runtime = 'edge'
-
 export async function GET() {
 	const client = QdrantSingleton.getClient()
 

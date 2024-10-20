@@ -5,7 +5,6 @@ import QdrantSingleton from '@/services/qdrant'
 import { embed } from 'ai'
 import { kv } from '@vercel/kv'
 
-export const runtime = 'edge'
 export const maxDuration = 15
 
 const getInformationTool = tool({

@@ -1,7 +1,5 @@
 import AirbyteService from '@/services/airbyte'
 
-export const runtime = 'edge'
-
 export async function GET() {
 	const client = new AirbyteService()
 	await client.initialize()

@@ -1,7 +1,5 @@
 import { kv } from '@vercel/kv'
 
-export const runtime = 'edge'
-
 export async function POST(request: Request) {
 	try {
 		const { index }: { index: number } = await request.json()
