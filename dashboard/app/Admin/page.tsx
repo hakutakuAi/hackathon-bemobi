@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { Fetcher } from 'swr'
 import Sidebar from '@/components/Sidebar'
 import DotPattern from '@/components/ui/dot-pattern'
 import { cn } from '@/lib/utils'
@@ -12,20 +12,37 @@ import Image from 'next/image'
 import HakutakuIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
 import NumberTicker from '@/components/ui/number-ticker'
 import { Tooltip } from '@nextui-org/react'
-import { Check, Loader2 } from 'lucide-react'
+import { Check } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Skeleton } from '@/components/ui/skeleton'
+
+interface IntegrationData {
+	qdrant?: {
+		requests?: {
+			rest?: {
+				responses?: {
+					'POST /collections/{name}/points/search'?: {
+						'200'?: {
+							count?: number
+						}
+					}
+				}
+			}
+		}
+	}
+	chatCount?: number
+	missingInformation?: string[]
+	vectorCount?: number
+}
+
+const fetcher: Fetcher<IntegrationData, string> = (url: string) => fetch(url).then((res) => res.json())
 
 export default function Admin() {
 	const [isSidebarExpanded, setIsSidebarExpanded] = useState(false)
 
-	const fetcher = (url: string) => fetch(url).then((res) => res.json())
-	const { data, error, mutate, isLoading } = useSWR('/api/integrations/infos', fetcher, {
-		refreshInterval: 30000,
-		revalidateOnFocus: true,
-	})
+	const { data, error, mutate, isLoading } = useSWR<IntegrationData>('/api/integrations/infos', fetcher)
 
-	const searchCount = data?.qdrant?.requests?.rest?.responses['POST /collections/{name}/points/search']['200']?.count || 0
+	const searchCount = data?.qdrant?.requests?.rest?.responses?.['POST /collections/{name}/points/search']?.['200']?.count ?? 0
 	const chatCount = data?.chatCount || 0
 	const missingInfo = data?.missingInformation || []
 	const vectorPoints = data?.vectorCount || 0

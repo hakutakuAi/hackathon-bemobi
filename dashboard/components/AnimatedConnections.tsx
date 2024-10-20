@@ -10,7 +10,7 @@ import Image from 'next/image'
 import { Tooltip } from '@nextui-org/tooltip'
 import GoogleDriveLogo from '@/assets/google-drive.svg'
 import FlickeringGrid from '@/components/ui/flickering-grid'
-import useSWR from 'swr'
+import useSWR, { Fetcher } from 'swr'
 import toast from 'react-hot-toast'
 
 interface Integration {
@@ -61,7 +61,7 @@ const Circle = React.forwardRef<
 
 Circle.displayName = 'Circle'
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const fetcher: Fetcher<Integration[], string> = (url: string) => fetch(url).then((res) => res.json())
 
 export default function AnimatedConnections() {
 	const containerRef = useRef<HTMLDivElement>(null)
