@@ -1,5 +1,5 @@
 import { openai } from '@ai-sdk/openai'
-import { streamText, convertToCoreMessages, tool } from 'ai'
+import { streamText, convertToCoreMessages, tool, CoreMessage } from 'ai'
 import { z } from 'zod'
 import QdrantSingleton from '@/services/qdrant'
 import { embed } from 'ai'
@@ -79,7 +79,7 @@ const storeMissingInformationTool = tool({
 
 export async function POST(req: Request) {
 	try {
-		const { messages, nodeId, connectedNodes } = await req.json()
+		const { messages, nodeId, connectedNodes }: { messages: any; nodeId?: string; connectedNodes?: string[] } = await req.json()
 		await kv.incr('chatCount')
 
 		let combinedMessages = convertToCoreMessages(messages)
@@ -88,10 +88,10 @@ export async function POST(req: Request) {
 			const sharedContexts = await Promise.all(
 				connectedNodes.map(async (connectedNodeId: string) => {
 					const context = await kv.get(`sharedContext:${connectedNodeId}`)
-					return context || []
+					return (context as CoreMessage[]) || []
 				})
 			)
-			combinedMessages = [...sharedContexts.flat(), ...combinedMessages]
+			combinedMessages = [...(sharedContexts.flat() as CoreMessage[]), ...combinedMessages]
 		}
 
 		const result = await streamText({

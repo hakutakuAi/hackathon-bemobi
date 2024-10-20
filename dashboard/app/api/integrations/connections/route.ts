@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server'
 import AirbyteService from '@/services/airbyte'
-import { unstable_noStore as noStore } from 'next/cache'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 export async function GET() {
-	noStore()
-
 	const client = new AirbyteService()
 	await client.initialize()
 
@@ -26,5 +23,5 @@ export async function GET() {
 		})
 	)
 
-	return NextResponse.json(enrichedConnections)
+	return Response.json(enrichedConnections)
 }

@@ -1,13 +1,9 @@
-import { NextResponse } from 'next/server'
 import QdrantSingleton from '@/services/qdrant'
 import { kv } from '@vercel/kv'
-import { unstable_noStore as noStore } from 'next/cache'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 export async function GET() {
-	noStore()
-
 	const client = QdrantSingleton.getClient()
 
 	const telemetry = await client.api('service').telemetry({
@@ -18,7 +14,7 @@ export async function GET() {
 	const chatCount = (await kv.get('chatCount')) || 0
 	const missingInformation = (await kv.lrange('missingInformation', 0, -1)) || []
 
-	return NextResponse.json({
+	return Response.json({
 		qdrant: telemetry.data.result,
 		chatCount,
 		missingInformation,
