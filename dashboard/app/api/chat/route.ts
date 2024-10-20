@@ -6,6 +6,7 @@ import { embed } from 'ai'
 import { kv } from '@vercel/kv'
 
 export const maxDuration = 15
+export const runtime = 'edge';
 
 const getInformationTool = tool({
 	description: `Retrieve relevant information from the knowledge base to answer the user's question. Utilize the Qdrant vector database to find the most semantically similar documents. You can use it repeatedly to find information on different topics.`,
