@@ -5,10 +5,14 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"pages:build": "npx @cloudflare/next-on-pages",
+		"preview": "npm run pages:build && wrangler pages dev",
+		"deploy": "npm run pages:build && wrangler pages deploy"
 	},
 	"dependencies": {
-		"@ai-sdk/openai": "^0.0.66",
+		"@ai-sdk/openai": "0.0.68",
+		"@cloudflare/next-on-pages": "^1.13.5",
 		"@heroicons/react": "^2.1.5",
 		"@nextui-org/react": "^2.4.8",
 		"@nextui-org/tooltip": "^2.0.41",

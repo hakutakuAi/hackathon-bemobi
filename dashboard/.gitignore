@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# Wrangler
+/.wrangler/
+
 # production
 /build
 
