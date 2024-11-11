@@ -67,7 +67,7 @@ export default function FlowComponent() {
 							data: {
 								...node.data,
 								// @ts-ignore
-								connectedNodes: [...new Set([...(node.data.connectedNodes || []), connectedNodeId])],
+								connectedNodes: [...new Set([...(node.data.connectedNodes || []), connectedNodeId])].filter((id): id is string => id !== null),
 							},
 						}
 					}
