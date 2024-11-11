@@ -90,12 +90,13 @@ export default function Admin() {
 			<Sidebar onExpand={setIsSidebarExpanded} />
 			<main className={cn('flex-1 flex flex-col relative z-10 overflow-hidden transition-all duration-300', 'w-full', 'md:ml-16', isSidebarExpanded ? 'md:ml-60' : 'md:ml-16', 'pt-16 md:pt-0')}>
 				<div className="flex-1 p-4 md:p-6 lg:p-10 overflow-auto">
-					<h1 className="text-2xl md:text-3xl font-bold mb-6">Administração</h1>
+					<h1 className="text-2xl md:text-3xl font-bold mb-6">Administration</h1>
 					<AnimatedConnections />
 					<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 mt-8">
 						<Card>
 							<CardHeader>
-								<CardTitle>Buscas feitas</CardTitle>
+								<CardTitle>Searches made
+								</CardTitle>
 							</CardHeader>
 							<CardContent>
 								{isLoading ? <Skeleton className="h-8 w-24" /> : <NumberTicker className="text-2xl md:text-3xl font-bold" value={searchCount} decimalPlaces={0} />}
@@ -103,13 +104,14 @@ export default function Admin() {
 						</Card>
 						<Card>
 							<CardHeader>
-								<CardTitle>Chats iniciados</CardTitle>
+								<CardTitle>Chats started
+								</CardTitle>
 							</CardHeader>
 							<CardContent>{isLoading ? <Skeleton className="h-8 w-24" /> : <NumberTicker className="text-2xl md:text-3xl font-bold" value={chatCount} decimalPlaces={0} />}</CardContent>
 						</Card>
 						<Card>
 							<CardHeader>
-								<CardTitle>Pontos vetorizados</CardTitle>
+								<CardTitle>Vectorized points</CardTitle>
 							</CardHeader>
 							<CardContent>
 								{isLoading ? <Skeleton className="h-8 w-24" /> : <NumberTicker className="text-2xl md:text-3xl font-bold" value={vectorPoints} decimalPlaces={0} />}
@@ -118,7 +120,7 @@ export default function Admin() {
 					</section>
 					<section className="mb-8">
 						<div className="flex justify-between items-center mb-4">
-							<h2 className="text-xl md:text-2xl font-semibold">Dados em falta</h2>
+							<h2 className="text-xl md:text-2xl font-semibold">Missing data</h2>
 							<Card className="w-auto">
 								<CardContent className="p-2 flex items-center space-x-2">
 									{isLoading ? (
@@ -159,12 +161,12 @@ export default function Admin() {
 														</div>
 														<div className="flex-1 min-w-0">
 															<p className="text-sm font-medium text-gray-900">{missingInfo}</p>
-															<p className="text-xs text-gray-500">Reportado por: Hakutaku (hakutaku@hakutaku.co)</p>
+															<p className="text-xs text-gray-500">Reported by: Hakutaku (hakutaku@hakutaku.co)</p>
 														</div>
 														<div>
 															<Button variant="outline" size="sm" onClick={() => handleSolve(index)} className="flex items-center space-x-1">
 																<Check className="w-4 h-4" />
-																<span>Solucionado</span>
+																<span>Solved</span>
 															</Button>
 														</div>
 													</div>
@@ -174,9 +176,9 @@ export default function Admin() {
 									</ul>
 								) : (
 									<div className="p-4 text-center">
-										<p className="text-lg font-medium text-gray-900">Uau! Parece que estamos em dia! 🎉</p>
+										<p className="text-lg font-medium text-gray-900">Wow! Looks like we're up to date! 🎉</p>
 										<p className="text-sm text-gray-500 mt-2">
-											Não há informações faltantes no momento. Nosso banco de dados está mais completo que a coleção de memes de um adolescente!
+										There is no missing information at this time. Our database is more complete than a teenager's meme collection!
 										</p>
 									</div>
 								)}
