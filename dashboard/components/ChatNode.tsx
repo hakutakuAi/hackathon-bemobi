@@ -101,7 +101,7 @@ export function ChatNode({ id, data, selected }: NodeProps<ChatNodeData>) {
   }, [messages, t])
 
   const lastMessage = useMemo(() => {
-    if (displayMessages.length === 0) return t('noMessagesYet')
+    if (displayMessages.length === 0) return 'there are no messages yet'
     const content = displayMessages[displayMessages.length - 1].content
     return content.length > 30 ? content.slice(0, 29) + '...' : content
   }, [displayMessages, t])
