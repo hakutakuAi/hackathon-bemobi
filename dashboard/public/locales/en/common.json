@@ -1,0 +1,32 @@
+{
+  "login": "Welcome",
+  "loading": {
+    "thinking": "Thinking carefully...",
+    "organizingThoughts": "Organizing thoughts...",
+    "consultingCrystalBall": "Consulting the crystal ball...",
+    "performingMagic": "Performing a bit of magic..."
+  },
+  "input": {
+    "placeholder": "Type your message...",
+    "loadingPlaceholder": "Loading response..."
+  },
+  "admin": {
+    "pageTitle": "Administration",
+    "searchesMade": "Searches made",
+    "chatsStarted": "Chats started",
+    "vectorizedPoints": "Vectorized points",
+    "missingData": "Missing data",
+    "tooltip": {
+      "great": "Great: 0-5 items",
+      "attention": "Attention: 6-10 items",
+      "critical": "Critical: 11+ items"
+    },
+    "noMissingData": {
+      "title": "Wow! We're up to date! 🎉",
+      "subtitle": "No missing data at the moment. Our database is more complete than a teenager's meme collection!"
+    },
+    "solved": "Solved",
+    "solvedSuccess": "Item solved successfully!",
+    "solvedError": "Error solving item"
+  }
+}

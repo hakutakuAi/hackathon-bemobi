@@ -1,0 +1,13 @@
+{
+  "login":"Entre",
+  "loading": {
+    "thinking": "Pensando com carinho...",
+    "organizingThoughts": "Colocando as ideias no lugar...",
+    "consultingCrystalBall": "Consultando a bola de cristal...",
+    "performingMagic": "Fazendo um pouco de mágica..."
+  },
+  "input": {
+    "placeholder": "Digite sua mensagem...",
+    "loadingPlaceholder": "Carregando resposta..."
+  }
+}

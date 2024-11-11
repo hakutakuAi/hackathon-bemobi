@@ -1,61 +1,69 @@
-'use client'
+'use client';
 
-import { useChat } from 'ai/react'
-import { FaStop } from 'react-icons/fa'
-import userIcon from '@/assets/Avatar.svg'
-import chatIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png'
-import chatIconThinking from '@/assets/HKTK-R02_AVATAR-FACE-BUSCA.png'
-import MemoizedMarkdown from '@/components/MemoizedMarkdown'
-import { useMemo, useEffect, useState } from 'react'
-import Image from 'next/image'
-import { GrSend } from 'react-icons/gr'
+import { useChat } from 'ai/react';
+import { FaStop } from 'react-icons/fa';
+import userIcon from '@/assets/Avatar.svg';
+import chatIcon from '@/assets/HKTK-R02_AVATAR-FACE-01.png';
+import chatIconThinking from '@/assets/HKTK-R02_AVATAR-FACE-BUSCA.png';
+import MemoizedMarkdown from '@/components/MemoizedMarkdown';
+import { useMemo, useEffect, useState } from 'react';
+import Image from 'next/image';
+import { GrSend } from 'react-icons/gr';
+import { useTranslation } from 'react-i18next';
 
-const loadingMessages = ['Pensando com carinho...', 'Colocando as ideias no lugar...', 'Consultando minha bola de cristal...', 'Fazendo mágica nos bastidores...']
+const Chat = () => {
+	const { t } = useTranslation('common');
+	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat();
+	const [showScrollButton, setShowScrollButton] = useState(false);
+	const [userScrolled, setUserScrolled] = useState(false);
 
-const getRandomLoadingMessage = () => loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
+	// Messages for loading state
+	const loadingMessages = [
+		t('loading.thinking'),
+		t('loading.organizingThoughts'),
+		t('loading.consultingCrystalBall'),
+		t('loading.performingMagic'),
+	];
 
-export default function Chat() {
-	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat()
-	const [showScrollButton, setShowScrollButton] = useState(false)
-	const [userScrolled, setUserScrolled] = useState(false)
+	const getRandomLoadingMessage = () => loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
 
 	const displayMessages = useMemo(() => {
 		return messages.reduce((acc: any[], message, index) => {
 			if (message.role === 'assistant') {
-				const lastMessage = acc[acc.length - 1]
+				const lastMessage = acc[acc.length - 1];
 				if (lastMessage && lastMessage.role === 'assistant') {
 					if (message.content) {
-						lastMessage.content = message.content
-						lastMessage.isLoading = false
+						lastMessage.content = message.content;
+						lastMessage.isLoading = false;
 					} else if (message.toolInvocations) {
-						lastMessage.isLoading = true
-						lastMessage.loadingMessage = getRandomLoadingMessage()
+						lastMessage.isLoading = true;
+						lastMessage.loadingMessage = getRandomLoadingMessage();
 					}
 				} else {
 					acc.push({
 						...message,
 						isLoading: !message.content,
 						loadingMessage: !message.content ? getRandomLoadingMessage() : null,
-					})
+					});
 				}
 			} else {
-				acc.push(message)
+				acc.push(message);
 			}
-			return acc
-		}, [])
-	}, [messages])
+			return acc;
+		}, []);
+	}, [messages]);
 
 	const checkIfUserAtBottom = () => {
-		const scrollContainer = document.documentElement
-		const isAtBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 100
-		setShowScrollButton(!isAtBottom)
-		setUserScrolled(!isAtBottom)
-	}
+		const scrollContainer = document.documentElement;
+		const isAtBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 100;
+		setShowScrollButton(!isAtBottom);
+		setUserScrolled(!isAtBottom);
+	};
 
 	useEffect(() => {
-		window.addEventListener('scroll', checkIfUserAtBottom)
-		return () => window.removeEventListener('scroll', checkIfUserAtBottom)
-	}, [])
+		window.addEventListener('scroll', checkIfUserAtBottom);
+		return () => window.removeEventListener('scroll', checkIfUserAtBottom);
+	}, []);
 
 	useEffect(() => {
 		const scrollToBottom = () => {
@@ -63,38 +71,40 @@ export default function Chat() {
 				window.scrollTo({
 					top: document.documentElement.scrollHeight,
 					behavior: 'smooth',
-				})
+				});
 			}
-		}
+		};
 
-		scrollToBottom()
-		checkIfUserAtBottom()
-	}, [messages, userScrolled])
+		scrollToBottom();
+		checkIfUserAtBottom();
+	}, [messages, userScrolled]);
 
 	const handleScrollToBottom = () => {
 		window.scrollTo({
 			top: document.documentElement.scrollHeight,
 			behavior: 'smooth',
-		})
-		setShowScrollButton(false)
-		setUserScrolled(false)
-	}
+		});
+		setShowScrollButton(false);
+		setUserScrolled(false);
+	};
 
 	const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		handleSubmit(e)
-		setUserScrolled(false)
+		e.preventDefault();
+		handleSubmit(e);
+		setUserScrolled(false);
 		setTimeout(() => {
-			handleScrollToBottom()
-		}, 100)
-	}
+			handleScrollToBottom();
+		}, 100);
+	};
 
 	return (
 		<div className="chat-container flex flex-col min-h-screen w-full">
 			<div className="flex-1 w-full max-w-3xl mx-auto px-4 pt-20 pb-32 md:pt-24 md:pb-36">
 				{displayMessages.map((m) => (
 					<div key={m.id} className={`message ${m.role === 'user' ? 'self-end' : 'self-start'} flex mb-4 items-start max-w-full`}>
-						{m.role === 'assistant' && <Image src={m.isLoading ? chatIconThinking : chatIcon} alt="Chat Icon" className="mr-2 md:w-16 md:h-16" />}
+						{m.role === 'assistant' && (
+							<Image src={m.isLoading ? chatIconThinking : chatIcon} alt="Chat Icon" className="mr-2 md:w-16 md:h-16" />
+						)}
 						<div
 							className={`p-3 md:p-4 rounded-xl max-w-[calc(100%-48px)] md:max-w-[calc(100%-80px)] break-words shadow-md ${
 								m.role === 'user' ? 'bg-[#D5CCC9] text-black rounded-3xl ml-auto' : 'bg-gradient-to-r from-[#F0F0F0] to-[#EDEDED] text-black rounded-3xl mr-auto'
@@ -131,7 +141,7 @@ export default function Chat() {
 					<input
 						value={input}
 						onChange={handleInputChange}
-						placeholder={isLoading ? 'Aguarde a resposta...' : 'Compartilhe seus pensamentos...'}
+						placeholder={isLoading ? t('input.loadingPlaceholder') : t('input.placeholder')}
 						disabled={isLoading}
 						className={`flex-1 p-2 md:p-4 rounded-full text-black bg-[#FDFDFD] focus:outline-none placeholder-gray-500 transition duration-300 ease-in-out text-sm md:text-base ${
 							isLoading ? 'cursor-not-allowed' : ''
@@ -172,5 +182,7 @@ export default function Chat() {
 				</div>
 			</form>
 		</div>
-	)
-}
+	);
+};
+
+export default Chat;
