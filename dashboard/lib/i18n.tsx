@@ -1,4 +1,3 @@
-// lib/i18n.tsx
 "use client";
 
 import i18n from 'i18next';
@@ -13,13 +12,12 @@ const resources = {
   },
 };
 
-// Configura e inicializa o i18n
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en', // Define o idioma padrão
-  fallbackLng: 'en', // Define o idioma de fallback
+  lng: 'en', 
+  fallbackLng: 'en', 
   interpolation: {
-    escapeValue: false, // React já faz escaping de valores
+    escapeValue: false, 
   },
 });
 

@@ -1,4 +1,11 @@
 {
+  "admin": "Admin",
+  "searches_made": "Searches made",
+  "chats_started": "Chats started",
+  "vector_points": "Vector points",
+  "missing_data": "Missing data",
+  "solved": "Solved",
+
   "login": "Welcome",
   "loading": {
     "thinking": "Thinking carefully...",
@@ -16,6 +23,7 @@
     "chatsStarted": "Chats started",
     "vectorizedPoints": "Vectorized points",
     "missingData": "Missing data",
+    
     "tooltip": {
       "great": "Great: 0-5 items",
       "attention": "Attention: 6-10 items",
